@@ -1,0 +1,428 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: arial;
+	background-color: #E9EBEE;
+	width: 100%;
+}
+
+.cover_profile_pics {
+	width: 1170px;
+	margin: auto;
+	background-color: #E9EBEE;
+}
+
+.images {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.coverphoto {
+	position: relative;
+	width: 100%;
+	height: 320px;
+	box-sizing: border-box;
+	background-color: #3337;
+}
+
+.coverphoto img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.coverpic {
+	position: absolute;
+	content: '';
+	width: 100%;
+	left: 0;
+	bottom: 0;
+}
+
+.profilepic {
+	position: relative;
+	margin-left: 20px;
+	margin-bottom: -20px;
+	width: 160px;
+	height: 170px;
+	background-color: #333;
+	border: 4px solid #fff;
+	border-radius: 3px;
+	box-shadow: 0px 0px 5px #3335;
+}
+
+.profilepic img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profilepic h1 {
+	position: absolute;
+	content: '';
+	left: 115%;
+	top: 50%;
+
+	color: #fff;
+	font-size: 35px;
+	width: 300%;
+}
+
+.profilepic h1>span {
+	font-weight: 400;
+}
+
+.navbar {
+	background-color: #fff;
+}
+
+.navbar ul {
+	padding: 0;
+	margin-bottom: 0;
+	text-align: left;
+	margin-left: 200px;
+}
+
+.navbar ul li {
+	display: inline-block;
+	padding: 18px 13px;
+
+	clear: #333;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.navbar ul li:hover {
+	color: #3A5898;
+}
+
+.navbar-items {
+	position: relative;
+}
+
+.all-information {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 3fr 5fr;
+	grid-column-gap: 15px;
+	margin-bottom: 15px;
+}
+
+
+.features {
+	background-color: #fff;
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	margin-top: 20px;
+	box-shadow: 0px 0px 2px rgba(233, 10, 10, 0.333);
+}
+
+
+.features span {
+	font-size: 20px;
+	color: #333;
+	font-weight: 600;
+}
+
+.features ul {
+	padding: 0;
+	margin-bottom: 0;
+	border-top: 1px solid #3A58982E;
+	padding-top: 10px;
+	margin-top: 15px;
+}
+
+.features ul li {
+	font-size: 18px;
+	color: #333;
+	list-style: none;
+
+	padding: 7px 0px;
+}
+
+.features ul li i {
+	margin-right: 5px;
+}
+
+.features ul li:hover {
+	color: rgb(16, 35, 207) !important;
+}
+
+
+
+.images-photos {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
+	margin-top: 15px;
+}
+
+.images-photos>div {
+	width: 100%;
+	height: 150px;
+	background-color: rgb(212, 13, 13);
+}
+
+.images-friends {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
+	margin-top: 15px;
+}
+
+.images-friends>div {
+	width: 100%;
+	height: 150px;
+	background-color: rgb(197, 0, 0);
+}
+
+.Photos-icon-bg {
+	background-color: #93D22D !important;
+}
+
+.Friends-icon-bg {
+	background-color: #F4004F !important;
+}
+
+
+.images-friends>div {
+	position: relative;
+}
+
+.images-friends>div p {
+	position: absolute;
+	content: '';
+	left: 5px;
+	bottom: 10px;
+	font-size: 16px;
+	color: #fff;
+	font-weight: 500;
+}
+
+.status-bar {
+	border-bottom: 1px solid #3332;
+}
+
+.status-bar ul {
+	padding: 0;
+	margin-bottom: 0;
+	border: none;
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+.status-bar ul li {
+	display: inline-block;
+	padding: 10px 10px;
+	font-size: 18px;
+	clear: #333;
+}
+
+.status-bar ul li i {
+	margin-right: 5px;
+}
+
+.instant-post {
+	display: grid;
+	grid-template-columns: 1fr 11fr;
+	grid-column-gap: 5px;
+	padding: 20px 0px;
+}
+
+.profile-img {
+	width: 50px;
+	height: 50px;
+	background-color: #333;
+}
+
+.profile-img img {
+	width: 100%;
+	height: 100%;
+
+}
+
+.instant-post div textarea {
+	width: 100%;
+	padding: 13px 10px;
+	border: 1px solid #3335;
+	resize: none;
+	outline: none;
+	font-size: 16px;
+	height: 50px;
+	box-sizing: border-box;
+	font-family: arial;
+}
+
+.post-div {
+	width: 100%;
+	border-top: 1px solid #3332;
+	padding-top: 10px;
+	text-align: right;
+}
+
+.post-div button {
+	padding: 7px 15px;
+	border-radius: 5px;
+	border: 1px solid #3332;
+	outline: none;
+
+	font-size: 18px;
+	clear: #333;
+}
+
+.post-div button i {
+	margin-right: 5px;
+}
+
+.post-button {
+	background-color: #4267B3;
+	color: #fff;
+}
+
+.posts {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 11fr;
+	grid-column-gap: 5px;
+}
+
+.post-name-info {
+	position: relative;
+}
+
+.post-name-info h2 {
+	font-size: 18px;
+	color: #333;
+	font-weight: 600;
+	margin-top: 7px;
+}
+
+.post-name-info .date-public span {
+	font-size: 14px !important;
+	color: #3337;
+	font-weight: 500;
+}
+
+.post-name-info .three-dot-icon {
+	position: absolute;
+	content: '';
+	top: 50%;
+
+	right: 10px;
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	border-radius: 50%;
+	font-size: 18px;
+	text-align: center;
+
+}
+
+.post-name-info .three-dot-icon:active {
+	background-color: #3333;
+}
+
+.post-img-txt {
+	width: 100%;
+}
+
+.post-img-txt p {
+	font-size: 18px;
+	clear: #000;
+	margin-top: 10px;
+	padding: 10px 10px;
+}
+
+.post-img-txt img {
+	width: 100%;
+	object-fit: cover;
+}
+
+.like-and-comment {
+	width: 100%;
+	padding: 10px 0px;
+	border-bottom: 1px solid #3332;
+}
+
+.like-and-comment button {
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	outline: none;
+	font-size: 18px;
+	color: #333;
+
+	background-color: #fff0;
+	margin-right: 10px;
+}
+
+.like-and-comment button:active {
+	background-color: #3332;
+}
+
+.like-and-comment button span {
+	font-size: 18px !important;
+}
+
+.comments {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 11fr;
+	grid-column-gap: 5px;
+	margin-top: 10px;
+}
+
+.miniPI {
+	width: 40px;
+	height: 40px;
+}
+
+.comment-div textarea {
+	width: 100%;
+	height: 40px;
+	font-family: arial;
+	font-size: 18px;
+	clear: #333;
+	border: 1px solid #3332;
+	outline: none;
+	padding: 0px 150px 0px 10px;
+	line-height: 40px;
+	box-sizing: border-box;
+	resize: none;
+}
+
+.comment-div {
+	position: relative;
+}
+
+.comment-div ul {
+	position: absolute;
+	content: '';
+	right: 30px;
+	top: 50%;
+
+	padding: 0;
+	margin-bottom: 0;
+	margin-top: 0px;
+}
+
+.comment-div ul li {
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	box-sizing: border-box;
+	border-radius: 50%;
+}
+
+.comment-div ul li i {
+	margin-left: 8px;
+	line-height: 22px;
+}
+
+.comment-div ul li:active {
+	background-color: #3332;
+}

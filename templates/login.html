@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Log in Form</title>
+    <link rel="stylesheet" href="{% static '/css/login.css' %}" />
+  </head>
+  <body>
+    <div class="login_form">
+
+      <div class="login_message">
+        <h1>facebook</h1>
+        <p>
+          Facebook helps you connect and share with the people in your life.
+        </p>
+        <p></p>
+      </div>
+
+      <div class="login_content">
+
+        <div class="title">
+          Log in
+          <a href="/login">
+            <img src="{% static 'images/logo-facebookpng-32242.png' %}" />
+          </a>
+        </div>
+
+        <form action="login" method="post">
+          {% csrf_token %}
+
+          <div class="field">
+            <input
+              type="text"
+              name="username"
+              placeholder="User Name"
+              required
+              />
+          </div>
+
+          <div class="field">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              />
+          </div>
+
+          <div class="field">
+            <input type="submit" value="Log in" />
+          </div>
+
+          <center>
+            <a href="#">Forgotten password?</a>
+          </center>
+
+        </form>
+      </div>
+    </div>
+
+    <center>
+      <div>
+        {% for message in messages %}
+        <h4>{{message}}</h4>
+        {% endfor %}
+      </div>
+    </center>
+
+  </body>
+</html>
