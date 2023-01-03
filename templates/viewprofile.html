@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/newprofile.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static '/css/viewprofile.css' %}" />
   </head>
 
   <body>
@@ -15,22 +15,6 @@
     <div class="header">
       <h1>Facebook</h1>
     </div>
-
-    <div class="search-navbar">
-      <a href="#">Home</a>
-      <a href="#">Profile</a>
-      <a href="#">Messages</a>
-      <a href="#">Notifications</a>
-      <a href="/logout">logout</a>
-      <a href="/settings">settings</a>
-
-      <form action="{% url 'search' %}" method="get" class="search-container">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Enter Name">
-        <button type="submit">Search</button>
-      </form>
-    </div>
-
     <section class="cover_profile_pics">
       <header class="images">
         <section class="coverphoto">
@@ -77,10 +61,12 @@
             <span>Photos</span>
 
             <div class="images-photos">
-              
-              {% for post in posts %}
-              <img src="{{post.image.url}}" />
-              {% endfor %}
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
           </div>
 
@@ -144,15 +130,12 @@
             </div>
 
             <div class="like-and-comment">
-             
               <button id="like-button" data-post-id="{{ post.id }}" data-userprofile-id="{{output.userprofile.id_user}}">Like</button>
-
               <button>Comment</button>
-              <button class="dropdown">Post Options<div class="dropdown-content">
-                <a href="postdeletion/{{post.id}}">Delete Post</a>
+             
               </div></button>
               <br>
-              <span id="like-count">liked by {{ post.no_of_likes }} people</span>
+              <span id="like-count">&nbsp &nbsp liked by {{ post.no_of_likes }} people</span>
             </div>
             <div class="comments">
               <div>
@@ -186,7 +169,7 @@
           dataType: 'json',
           success: function(response) {
             console.log(response.likes)
-            $('#like-count').text(" &nbsp &nbsp liked by"+response.likes+" people");
+            $('#like-count').text(response.likes);
           }
         });
       });

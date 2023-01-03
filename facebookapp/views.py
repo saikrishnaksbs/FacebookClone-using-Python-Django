@@ -11,7 +11,9 @@ from django.db import connection
 from django.db.models import OuterRef, Subquery
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile
+from .models import Profile, Post, LikePost
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 
 
 def home(request):
@@ -40,6 +42,10 @@ def signup(request):
                 user = User.objects.create_user(username=Username, password=Password,
                                                 email=Email_Address, first_name=First_name, last_name=Last_name)
                 user.save()
+                user_model = User.objects.get(username=Username)
+                new_profile = Profile.objects.create(
+                    user=user_model, id_user=user_model.id)
+                new_profile.save()
                 return redirect('login')
 
         else:
@@ -58,8 +64,8 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            print(user)
-            return render(request, 'profile.html', {'output': user})
+            return redirect('profile')
+            # return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts})
 
         else:
             messages.info(request, 'Check Credentials')
@@ -69,14 +75,16 @@ def login(request):
         return render(request, 'login.html')
 
 
+@login_required
+@transaction.atomic
 def logout(request):
     auth.logout(request)
     return redirect('/')
 
 
 def settings(request):
+    user_profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
-        user_profile = Profile.objects.get(user=request.user)
 
         if request.FILES.get('image') == None:
             image = user_profile.profileimg
@@ -99,5 +107,117 @@ def settings(request):
             user_profile.location = location
             user_profile.save()
 
-        return redirect('login')
+        return redirect('profile')
     return render(request, 'settings.html')
+
+
+def profile(request):
+    username = User.objects.get(username=request.user.username)
+    print(username)
+    usercheck = Profile.objects.all().filter(id_user=request.user.id)
+    if usercheck.count() == 0:
+        alldetails = {'name': username,
+                      'userprofile': None,
+                      }
+        return render(request, 'newprofile.html', {'output': alldetails})
+    else:
+        userprofile = Profile.objects.get(user=username)
+        postscheck = Post.objects.all().filter(user=username)
+
+        if postscheck.count() == 0:
+            alldetails = {'name': username,
+                          'userprofile': userprofile,
+                          }
+            return render(request, 'newprofile.html', {'output': alldetails})
+
+        else:
+            posts = Post.objects.filter(user=userprofile)
+            alldetails = {'name': request.user.username,
+                          'userprofile': userprofile,
+                          }
+            return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts})
+
+
+def postuploading(request):
+
+    if request.method == 'POST':
+        user = request.user.username
+        image = request.FILES.get('image')
+        caption = request.POST['caption']
+
+        new_post = Post.objects.create(user=user, image=image, caption=caption)
+        new_post.save()
+        return redirect('profile')
+
+    else:
+        return render(request, 'post.html')
+
+
+def postdeletion(request, id):
+    blogpost = Post.objects.get(id=id)
+    blogpost.delete()
+    return redirect('profile')
+
+
+def search(request):
+    searched_name = request.GET
+    searched_details = searched_name.get("name")
+    print(searched_details, searched_name)
+
+    searched_name = User.objects.filter(username=searched_details)
+    print(searched_name)
+    if searched_name.count() == 0:
+        return HttpResponse(searched_details+" does not exist")
+    else:
+        username = User.objects.get(username=searched_details)
+
+        print(username, username.id)
+        usercheck = Profile.objects.all().filter(id_user=username.id)
+        if usercheck.count() == 0:
+            alldetails = {'name': searched_details,
+                          'userprofile': None,
+                          }
+            return render(request, 'viewprofile.html', {'output': alldetails})
+        else:
+            userprofile = Profile.objects.get(user=username)
+            postscheck = Post.objects.all().filter(user=username)
+
+            if postscheck.count() == 0:
+                alldetails = {'name': searched_details,
+                              'userprofile': userprofile,
+                              }
+                return render(request, 'viewprofile.html', {'output': alldetails})
+
+            else:
+                posts = Post.objects.filter(user=searched_details)
+                alldetails = {'name': searched_details,
+                              'userprofile': userprofile,
+                              }
+                return render(request, 'viewprofile.html', {'output': alldetails, 'posts': posts})
+
+
+def like_post(request):
+    if request.method == 'POST':
+        postid = request.POST.get('post_id')
+        profileid = request.POST.get('profile_id')
+        print(profileid, postid)
+        username = request.user.username
+        post = Post.objects.get(id=postid)
+        like_filter = LikePost.objects.filter(
+            post_id=postid, username=username).first()
+
+        if like_filter == None:
+            new_like = LikePost.objects.create(
+                post_id=postid, username=username)
+            new_like.save()
+            post.no_of_likes = post.no_of_likes+1
+            post.save()
+            print(post)
+            return JsonResponse({'likes': post.no_of_likes})
+
+        else:
+            like_filter.delete()
+            post.no_of_likes = post.no_of_likes-1
+            post.save()
+            print(post)
+            return JsonResponse({'likes': post.no_of_likes})

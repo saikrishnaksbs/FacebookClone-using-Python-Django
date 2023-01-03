@@ -255,16 +255,16 @@ body {
 
 
 .images-photos {
-	display: flex;
-	column-gap: 5px;
-	row-gap: 5px;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
 	margin-top: 15px;
 }
 
-.images-photos img {
-	width: 150px;
-	height: 100px;
+.images-photos>div {
+	width: 100%;
+	height: 150px;
+	background-color: rgb(212, 13, 13);
 }
 
 .images-friends {

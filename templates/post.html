@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="{% static '/css/post.css' %}" />
+  </head>
+  <body>
+    <center>
+      <div class="content">
+
+        <div class="content_details">
+
+          <div class="title">
+            Post Status
+            <a href="/login"></a>
+          </div>
+
+          <form action="postuploading" method="post"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="field">
+              <input type="text" name="caption" placeholder="caption" required
+                />
+            </div>
+
+            <div class="field">
+              <input type="file" name="image" value="image" />
+            </div>
+
+            <div class="field">
+              <input type="submit" value="Post" />
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </center>
+  </body>
+</html>

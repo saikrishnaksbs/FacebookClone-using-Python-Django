@@ -7,21 +7,21 @@
     <link rel="stylesheet" href="{% static '/css/signup.css' %}" />
   </head>
   <body>
-
     <div class="content">
-
       <div class="content_message">
-         <h1>facebook</h1>
-         <p>Facebook helps you connect and share with the people in your life.<p>
+        <h1>facebook</h1>
+        <p>
+          Facebook helps you connect and share with the people in your life.
+        </p>
+        <p></p>
       </div>
 
       <div class="content_details">
-
         <div class="title">
-           Create Account
-          <a href="/login"
-            ><img src="{% static 'images/logo-facebookpng-32242.png' %}"
-          /></a>
+          Create Account
+          <a href="/login"><img
+              src="{% static 'images/logo-facebookpng-32242.png' %}"
+              /></a>
         </div>
 
         <form action="signup" method="post">
@@ -33,7 +33,7 @@
               name="first_name"
               placeholder="First Name"
               required
-            />
+              />
           </div>
 
           <div class="field">
@@ -42,7 +42,7 @@
               name="last_name"
               placeholder="Last Name"
               required
-            />
+              />
           </div>
 
           <div class="field">
@@ -51,7 +51,7 @@
               name="username"
               placeholder="UserName"
               required
-            />
+              />
           </div>
 
           <div class="field">
@@ -60,7 +60,7 @@
               name="email"
               placeholder="Email Address"
               required
-            />
+              />
           </div>
 
           <div class="field">
@@ -69,7 +69,7 @@
               name="password"
               placeholder="Password"
               required
-            />
+              />
           </div>
 
           <div class="field">
@@ -78,7 +78,7 @@
               name="confirm"
               placeholder="Confirm Password"
               required
-            />
+              />
           </div>
 
           <div class="field">
@@ -88,7 +88,6 @@
           <div class="signup-link">
             Already have a account?<a href="login"> Login Now</a>
           </div>
-          
         </form>
       </div>
     </div>
@@ -100,6 +99,5 @@
         {% endfor %}
       </div>
     </center>
-
   </body>
 </html>
