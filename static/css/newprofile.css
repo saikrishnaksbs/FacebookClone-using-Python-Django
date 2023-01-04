@@ -85,7 +85,7 @@ body {
 
 .cover_profile_pics {
 	width: 100%;
-	margin: auto;
+
 	background-color: #E9EBEE;
 }
 
@@ -95,7 +95,7 @@ body {
 }
 
 .coverphoto {
-	position: relative;
+
 	width: 100%;
 	height: 320px;
 	box-sizing: border-box;
@@ -105,7 +105,7 @@ body {
 .coverphoto img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+
 }
 
 .dropdown {
@@ -137,7 +137,7 @@ body {
 
 .coverpic {
 	position: absolute;
-	content: '';
+
 	width: 100%;
 	left: 0;
 	bottom: 0;
@@ -146,7 +146,7 @@ body {
 .profilepic {
 	position: relative;
 	margin-left: 20px;
-	margin-bottom: -20px;
+	top: -350px;
 	width: 160px;
 	height: 170px;
 	background-color: #333;
@@ -162,10 +162,9 @@ body {
 }
 
 .profilepic h1 {
-	position: absolute;
-	content: '';
-	left: 115%;
-	top: 50%;
+	position: relative;
+	top: -100px;
+	left: 200px;
 
 	color: #fff;
 	font-size: 35px;
@@ -528,15 +527,3 @@ body {
 .comment-div ul li:active {
 	background-color: #3332;
 }
-
-@media screen and (max-width: 1199px) {
-	.cover_profile_pics {
-		width: 100%;
-	}
-}
-
-@media screen and (max-width: 991px) {}
-
-@media screen and (max-width: 767px) {}
-
-@media screen and (max-width: 575px) {}

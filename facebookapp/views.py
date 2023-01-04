@@ -11,10 +11,10 @@ from django.db import connection
 from django.db.models import OuterRef, Subquery
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile, Post, LikePost
+from .models import Profile, Post, Comment, LikePost
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-
+import datetime
 
 def home(request):
     return render(request, 'home.html')
@@ -65,7 +65,6 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             return redirect('profile')
-            # return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts})
 
         else:
             messages.info(request, 'Check Credentials')
@@ -190,6 +189,7 @@ def search(request):
 
             else:
                 posts = Post.objects.filter(user=searched_details)
+                
                 alldetails = {'name': searched_details,
                               'userprofile': userprofile,
                               }
@@ -200,24 +200,61 @@ def like_post(request):
     if request.method == 'POST':
         postid = request.POST.get('post_id')
         profileid = request.POST.get('profile_id')
-        print(profileid, postid)
+        
         username = request.user.username
         post = Post.objects.get(id=postid)
+        print(post,username,profileid,postid)
         like_filter = LikePost.objects.filter(
-            post_id=postid, username=username).first()
-
-        if like_filter == None:
+            post_id=postid, username=username).exists()
+        print(like_filter)
+        
+        like_filter_data = LikePost.objects.filter(post_id=postid, username=username)
+        print(like_filter_data)
+        print("--------")
+        
+        if not like_filter:
             new_like = LikePost.objects.create(
                 post_id=postid, username=username)
             new_like.save()
             post.no_of_likes = post.no_of_likes+1
             post.save()
-            print(post)
-            return JsonResponse({'likes': post.no_of_likes})
+         
+            return JsonResponse({'likes': post.no_of_likes,'post_id':postid})
 
         else:
-            like_filter.delete()
+            like_filter_data.delete()
             post.no_of_likes = post.no_of_likes-1
             post.save()
-            print(post)
-            return JsonResponse({'likes': post.no_of_likes})
+          
+            return JsonResponse({'likes': post.no_of_likes,'post_id':postid})
+
+
+def postComment(request,id):
+    
+    if request.method == "POST":
+        
+        blogpost = Post.objects.get(id=id)
+        comment=request.POST.get('comment')
+        post = Post.objects.get(id=id)
+        name=request.user.username
+        body=comment
+        comments=Comment.objects.create(post=post,name=name,body=body)
+        comments.save()
+                
+        return redirect('profile')
+       
+
+# def send_friend_request(request,userID):
+#     from_user=request.user
+#     to_user=User.objects.gegt(id=userID)
+#     friend_request=Friend_Request.objects.get_or_create(from_user=from_user,to_user=to_user,status='pending')
+    
+# def accept_friend_request(request,requsestID):
+#     friend_request=Friend_Request.objects.get(id=requsestID)
+#     if friend_request.to_user==request.user:
+#         friend_request.to_user.friends.add(friend_request.from_user)
+#         friend_request.from_user.friends.add(friend_request.to_user)
+#         friend_request.delete()
+#         return HttpResponse('friend request accepted')
+#     else:
+#         return HttpResponse('friend request not accepted')

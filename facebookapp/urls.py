@@ -13,4 +13,5 @@ urlpatterns = [
     path('postdeletion/<uuid:id>', views.postdeletion, name='postdeletion'),
     path('search', views.search, name='search'),
     path('like-post', views.like_post, name='like-post'),
+    path('postComment/<uuid:id>', views.postComment, name='postComment')
 ]

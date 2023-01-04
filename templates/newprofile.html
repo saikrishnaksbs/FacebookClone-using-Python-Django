@@ -20,7 +20,7 @@
       <a href="#">Home</a>
       <a href="#">Profile</a>
       <a href="#">Messages</a>
-      <a href="#">Notifications</a>
+      <a href="#">Friend Requests</a>
       <a href="/logout">logout</a>
       <a href="/settings">settings</a>
 
@@ -107,7 +107,7 @@
 
             <div class="instant-post">
               <div class="profile-img">
-                <img src="" />
+                <img src="{{output.userprofile.profileimg.url}}" />
               </div>
               <div>
                 <textarea placeholder="What's on your mind?"></textarea>
@@ -145,14 +145,14 @@
 
             <div class="like-and-comment">
              
-              <button id="like-button" data-post-id="{{ post.id }}" data-userprofile-id="{{output.userprofile.id_user}}">Like</button>
+              <button class="like-button" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.id_user}}">Like</button>
 
               <button>Comment</button>
               <button class="dropdown">Post Options<div class="dropdown-content">
                 <a href="postdeletion/{{post.id}}">Delete Post</a>
               </div></button>
               <br>
-              <span id="like-count">liked by {{ post.no_of_likes }} people</span>
+              <span id="like-count-{{ post.id }}">liked by {{ post.no_of_likes }} people</span>
             </div>
             <div class="comments">
               <div>
@@ -161,13 +161,18 @@
                 </div>
               </div>
               <div class="comment-div">
-                <textarea placeholder="Write acomment..."></textarea>
-                <ul>
-                  <li></li>
-                  <li></li>
-                </ul>
+                <form action="/postComment/{{post.id}}" method="post">
+                  {% csrf_token %}
+                  <input type="text" name="comment" placeholder="Enter comment here">
+                  
+                  <input type="submit" value="Send">
+                 </form>
               </div>
             </div>
+            {% for comment in post.comments.all %}
+                <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{comment.body}} - {{comment.name}}</h1>
+                <br>
+              {% endfor %}
             {% endfor %}
           </div>
          </div>
@@ -175,7 +180,7 @@
       </section>
     </section>
     <script>
-      $('#like-button').click(function() {
+      $('.like-button').click(function() {
         var postId= $(this).attr("data-post-id");
         var profileid=$(this).attr("data-userprofile-id");
         console.log(postId,profileid)
@@ -185,8 +190,8 @@
           data: {'post_id': postId, 'profile_id':profileid, csrfmiddlewaretoken: '{{ csrf_token }}'},
           dataType: 'json',
           success: function(response) {
-            console.log(response.likes)
-            $('#like-count').text(" &nbsp &nbsp liked by"+response.likes+" people");
+            console.log(response.likes,response.post_id)
+            $('#like-count-'+postId).text("liked by "+response.likes+ " people");
           }
         });
       });
