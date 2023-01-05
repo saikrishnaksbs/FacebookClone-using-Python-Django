@@ -20,7 +20,7 @@
       <a href="#">Home</a>
       <a href="#">Profile</a>
       <a href="#">Messages</a>
-      <a href="#">Friend Requests</a>
+      <a href="/friendrequests">Friend Requests</a>
       <a href="/logout">logout</a>
       <a href="/settings">settings</a>
 
@@ -49,7 +49,7 @@
           <ul>
             <li class="navbar-items">Timeline</li>
             <li>About</li>
-            <li>Friends</li>
+            <a href="/friendslist/{{output.userprofile.id_user}}"><li>Friends</li></a>
             <li>Photos</li>
             <li>More </li>
           </ul>

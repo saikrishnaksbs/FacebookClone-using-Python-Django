@@ -176,6 +176,18 @@ body {
 	font-weight: 400;
 }
 
+.profilepic button {
+	position: absolute;
+	content: '';
+	left: 315%;
+	top: 55%;
+	width: 100px;
+	height: 50px;
+	font-size: 15px;
+	background-color: #00A4BD;
+
+}
+
 .navbar {
 	background-color: #fff;
 }

@@ -17,9 +17,11 @@ body {
   margin: 0;
   padding: 1.563rem;
 }
+
 .login_form {
   padding: 1.563rem;
 }
+
 .login_content {
   background: #fff;
   border-radius: 0.938rem;
@@ -144,6 +146,7 @@ a {
   .login_message {
     margin-top: 9.375rem;
   }
+
   .login_message :nth-child(1) {
     position: relative;
     color: #1877f2;

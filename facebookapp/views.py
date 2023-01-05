@@ -11,10 +11,11 @@ from django.db import connection
 from django.db.models import OuterRef, Subquery
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile, Post, Comment, LikePost
+from .models import Profile, Post, Comment, LikePost, Friend_Request, Friends
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 import datetime
+
 
 def home(request):
     return render(request, 'home.html')
@@ -161,10 +162,9 @@ def postdeletion(request, id):
 def search(request):
     searched_name = request.GET
     searched_details = searched_name.get("name")
-    print(searched_details, searched_name)
-
+    requested_userid = request.user.id
     searched_name = User.objects.filter(username=searched_details)
-    print(searched_name)
+    print(searched_name, requested_userid)
     if searched_name.count() == 0:
         return HttpResponse(searched_details+" does not exist")
     else:
@@ -175,6 +175,7 @@ def search(request):
         if usercheck.count() == 0:
             alldetails = {'name': searched_details,
                           'userprofile': None,
+                          'searchedby': requested_userid,
                           }
             return render(request, 'viewprofile.html', {'output': alldetails})
         else:
@@ -184,14 +185,16 @@ def search(request):
             if postscheck.count() == 0:
                 alldetails = {'name': searched_details,
                               'userprofile': userprofile,
+                              'searchedby': requested_userid,
                               }
                 return render(request, 'viewprofile.html', {'output': alldetails})
 
             else:
                 posts = Post.objects.filter(user=searched_details)
-                
+
                 alldetails = {'name': searched_details,
                               'userprofile': userprofile,
+                              'searchedby': requested_userid,
                               }
                 return render(request, 'viewprofile.html', {'output': alldetails, 'posts': posts})
 
@@ -200,61 +203,114 @@ def like_post(request):
     if request.method == 'POST':
         postid = request.POST.get('post_id')
         profileid = request.POST.get('profile_id')
-        
+
         username = request.user.username
         post = Post.objects.get(id=postid)
-        print(post,username,profileid,postid)
+        print(post, username, profileid, postid)
         like_filter = LikePost.objects.filter(
             post_id=postid, username=username).exists()
         print(like_filter)
-        
-        like_filter_data = LikePost.objects.filter(post_id=postid, username=username)
+
+        like_filter_data = LikePost.objects.filter(
+            post_id=postid, username=username)
         print(like_filter_data)
         print("--------")
-        
+
         if not like_filter:
             new_like = LikePost.objects.create(
                 post_id=postid, username=username)
             new_like.save()
             post.no_of_likes = post.no_of_likes+1
             post.save()
-         
-            return JsonResponse({'likes': post.no_of_likes,'post_id':postid})
+
+            return JsonResponse({'likes': post.no_of_likes, 'post_id': postid})
 
         else:
             like_filter_data.delete()
             post.no_of_likes = post.no_of_likes-1
             post.save()
-          
-            return JsonResponse({'likes': post.no_of_likes,'post_id':postid})
+
+            return JsonResponse({'likes': post.no_of_likes, 'post_id': postid})
 
 
-def postComment(request,id):
-    
+def postComment(request, id):
+
     if request.method == "POST":
-        
-        blogpost = Post.objects.get(id=id)
-        comment=request.POST.get('comment')
-        post = Post.objects.get(id=id)
-        name=request.user.username
-        body=comment
-        comments=Comment.objects.create(post=post,name=name,body=body)
-        comments.save()
-                
-        return redirect('profile')
-       
 
-# def send_friend_request(request,userID):
-#     from_user=request.user
-#     to_user=User.objects.gegt(id=userID)
-#     friend_request=Friend_Request.objects.get_or_create(from_user=from_user,to_user=to_user,status='pending')
-    
-# def accept_friend_request(request,requsestID):
-#     friend_request=Friend_Request.objects.get(id=requsestID)
-#     if friend_request.to_user==request.user:
-#         friend_request.to_user.friends.add(friend_request.from_user)
-#         friend_request.from_user.friends.add(friend_request.to_user)
-#         friend_request.delete()
-#         return HttpResponse('friend request accepted')
-#     else:
-#         return HttpResponse('friend request not accepted')
+        blogpost = Post.objects.get(id=id)
+        comment = request.POST.get('comment')
+        post = Post.objects.get(id=id)
+        name = request.user.username
+        body = comment
+        comments = Comment.objects.create(post=post, name=name, body=body)
+        comments.save()
+
+        return redirect('profile')
+
+
+def addrequest(request):
+    if request.method == 'POST':
+        searchedbyid = request.POST.get('searchedbyid')
+        searchedid = request.POST.get('searchedid')
+
+        searchedbyid_object = User.objects.get(id=searchedbyid)
+        searchedid_object = User.objects.get(id=searchedid)
+        if not Friend_Request.objects.filter(from_user=searchedbyid_object, to_user=searchedid_object).exists():
+
+            friendrequest = Friend_Request.objects.create(
+                from_user=searchedbyid_object, to_user=searchedid_object)
+            friendrequest.save()
+            response = "sent"
+            return JsonResponse({'response': response})
+        else:
+            response = "Request already sent"
+            return JsonResponse({'response': response})
+
+
+def friendrequests(request):
+    userid = request.user.id
+    friendrequests = Friend_Request.objects.filter(to_user__id=userid)
+    print(friendrequests)
+    return render(request, 'friendlist.html', {'friendslist': friendrequests})
+
+
+def acceptrequest(request):
+
+    if request.method == 'POST':
+        friendid = request.POST.get('friendid')
+        friendname = request.POST.get('friendname')
+        sender_friend_object = Profile.objects.get(id_user=friendid)
+        accepted_friend_object = Profile.objects.get(id_user=request.user.id)
+
+        print(friendid, request.user.id, sender_friend_object)
+        if not Friends.objects.filter(profile=sender_friend_object, friends=request.user.username).exists():
+            sender_friend = Friends.objects.create(
+                profile=sender_friend_object, friends=request.user.username)
+            accepted_friend = Friends.objects.create(
+                profile=accepted_friend_object, friends=friendname)
+            sender_friend.save()
+            accepted_friend.save()
+            friendrequests = Friend_Request.objects.filter(
+                to_user__id=request.user.id, from_user__id=friendid)
+            friendrequests.delete()
+            message = "You are friends now"
+            return JsonResponse({'message': message})
+
+
+def rejectrequest(request):
+
+    if request.method == 'POST':
+        friendid = request.POST.get('friendid')
+        friendname = request.POST.get('friendname')
+        friendrequests = Friend_Request.objects.filter(
+            to_user__id=request.user.id, from_user__id=friendid)
+        friendrequests.delete()
+        message = "Request Deleted"
+        return JsonResponse({'message': message})
+
+
+def friendslist(request, id):
+    print(id)
+    profile_details = Profile.objects.get(id_user=id)
+    Friend_list = Friends.objects.filter(profile=profile_details)
+    return render(request, 'allfriendslist.html', {'Friend_list': Friend_list})

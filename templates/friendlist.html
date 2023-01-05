@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <title>Friends List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static '/css/friendlist.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <div class="header">
+        <h1>Facebook</h1>
+    </div>
+    <center><h3>Your Friend Requests</h3></center>
+    <br>
+    {% for friend in friendslist %}
+        
+        <div id="friends-list">
+            <div class="friend">
+                <div class="name">
+                    {{friend.from_user.username}}
+                </div>
+                <div class="accept{{friend.from_user.id}}">
+                    <button class="acceptbutton" friendname="{{friend.from_user.username}}" friendid="{{friend.from_user.id}}"> Accept Requeust </button> 
+                </div>
+                <div class="accept{{friend.from_user.id}}">
+                    <button class="rejectbutton" friendname="{{friend.from_user.username}}" friendid="{{friend.from_user.id}}"> Reject Requeust </button>
+                </div>
+
+                <p id="stmt{{friend.from_user.id}}"></p>
+            </div>
+        </div>    
+    {% endfor %}
+<script>
+    $('.acceptbutton').click(function() {
+        var friendid= $(this).attr("friendid");
+        var friendname= $(this).attr("friendname");
+        console.log(friendid)
+        $.ajax({
+          url: '/acceptrequest',
+          type: 'POST',
+          data: {'friendid': friendid,'friendname':friendname, csrfmiddlewaretoken: '{{ csrf_token }}'},
+          dataType: 'json',
+          success: function(response) {
+            console.log(response.message)
+            $('.accept'+friendid).text("");
+            $('#stmt'+friendid).text(response.message);
+          }
+        });
+      });
+
+      $('.rejectbutton').click(function() {
+        var friendid= $(this).attr("friendid");
+        var friendname= $(this).attr("friendname");
+        console.log(friendid)
+        $.ajax({
+          url: '/rejectrequest',
+          type: 'POST',
+          data: {'friendid': friendid,'friendname':friendname, csrfmiddlewaretoken: '{{ csrf_token }}'},
+          dataType: 'json',
+          success: function(response) {
+            console.log(response.message)
+            $('.accept'+friendid).text("");
+            $('#stmt'+friendid).text(response.message);
+          }
+        });
+      });
+    </script>
+    </body>
+</html>

@@ -13,5 +13,10 @@ urlpatterns = [
     path('postdeletion/<uuid:id>', views.postdeletion, name='postdeletion'),
     path('search', views.search, name='search'),
     path('like-post', views.like_post, name='like-post'),
-    path('postComment/<uuid:id>', views.postComment, name='postComment')
+    path('addrequest', views.addrequest, name='addrequest'),
+    path('postComment/<uuid:id>', views.postComment, name='postComment'),
+    path('friendrequests', views.friendrequests, name='friendrequests'),
+    path('acceptrequest', views.acceptrequest, name='acceptrequest'),
+    path('rejectrequest', views.rejectrequest, name='rejectrequest'),
+    path('friendslist/<int:id>', views.friendslist, name='friendslist'),
 ]

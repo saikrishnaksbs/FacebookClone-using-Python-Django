@@ -25,6 +25,7 @@
               <h1 class="profilename">
                 {{output.name}} <span></span>
               </h1>
+              <button searchedby-id="{{output.searchedby}}" searched-id="{{output.userprofile.id_user}}" id="text-button">Send request</button>
             </div>
           </section>
         </section>
@@ -33,7 +34,7 @@
           <ul>
             <li class="navbar-items">Timeline</li>
             <li>About</li>
-            <li>Friends</li>
+            <a href="/friendslist/{{output.userprofile.id_user}}"><li>Friends</li></a>
             <li>Photos</li>
             <li>More </li>
           </ul>
@@ -123,13 +124,10 @@
                 </p>
               </div>
             </div>
-
             <div class="post-img-txt">
               <p>{{post.caption}}</p>
-
               <img src="{{post.image.url}}" />
             </div>
-
             <div class="like-and-comment">
               <button class="like-button" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.id_user}}">Like</button>
               
@@ -167,6 +165,7 @@
       </section>
     </section>
     <script>
+
       $('.like-button').click(function() {
         var postId= $(this).attr("data-post-id");
         var profileid=$(this).attr("data-userprofile-id");
@@ -182,6 +181,27 @@
           }
         });
       });
+
+      $(document).ready(function() {
+        $('#text-button').click(function() {
+          var searchedbyid=$(this).attr("searchedby-id"); 
+        var searchedid=$(this).attr("searched-id");
+        console.log(searchedbyid,searchedid)
+          $.ajax({
+            url: '/addrequest',
+            type: 'POST',
+            data: {'searchedbyid': searchedbyid, 'searchedid':searchedid, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            dataType: 'json',
+            success: function(response) {
+              if ($('#text-button').text() === 'Send request') {
+                $('#text-button').text(response.response);
+              } else {
+                $('#text-button').text(response.response);
+              }
+            }
+          });
+        });
+      });  
     </script>
   </body>
 </html>
