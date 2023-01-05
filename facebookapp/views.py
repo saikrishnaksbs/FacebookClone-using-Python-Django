@@ -255,17 +255,19 @@ def addrequest(request):
 
         searchedbyid_object = User.objects.get(id=searchedbyid)
         searchedid_object = User.objects.get(id=searchedid)
-        if not Friend_Request.objects.filter(from_user=searchedbyid_object, to_user=searchedid_object).exists():
+        checking_friendrequest=Friends.objects.filter(profile=searchedid_object,friends=request.user.username).exists()
+        
+        if not checking_friendrequest:
+            if not Friend_Request.objects.filter(from_user=searchedbyid_object, to_user=searchedid_object).exists():
 
-            friendrequest = Friend_Request.objects.create(
-                from_user=searchedbyid_object, to_user=searchedid_object)
-            friendrequest.save()
-            response = "sent"
-            return JsonResponse({'response': response})
+                friendrequest = Friend_Request.objects.create(
+                    from_user=searchedbyid_object, to_user=searchedid_object)
+                friendrequest.save()
+                response = "sent"
+                return JsonResponse({'response': response})
         else:
-            response = "Request already sent"
-            return JsonResponse({'response': response})
-
+                response = "Request already sent"
+                return JsonResponse({'response': response})
 
 def friendrequests(request):
     userid = request.user.id
