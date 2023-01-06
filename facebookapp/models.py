@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, error_messages={
+    user = models.OneToOneField(User,related_name='profile', on_delete=models.CASCADE, unique=True, error_messages={
         'unique': 'This field must be unique.'
     })
     id_user = models.IntegerField()
@@ -44,7 +44,7 @@ class LikePost(models.Model):
 
 
 class Friends(models.Model):
-    profile = models.ForeignKey(Profile,related_name='profile', on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,related_name='friends', on_delete=models.CASCADE)
     name=models.CharField(max_length=100, blank=True)
     friends = models.CharField(max_length=100, blank=True)
 

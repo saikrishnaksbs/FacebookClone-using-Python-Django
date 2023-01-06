@@ -113,13 +113,15 @@ def settings(request):
 
 def profile(request):
     username = User.objects.get(username=request.user.username)
-    print(username)
     usercheck = Profile.objects.all().filter(id_user=request.user.id)
+    friendsnames=[]
+    Friend_list = Friends.objects.filter(profile_id=request.user.id)
+
     if usercheck.count() == 0:
         alldetails = {'name': username,
                       'userprofile': None,
                       }
-        return render(request, 'newprofile.html', {'output': alldetails})
+        return render(request, 'newprofile.html', {'output': alldetails,'Friend_list': Friend_list})
     else:
         userprofile = Profile.objects.get(user=username)
         postscheck = Post.objects.all().filter(user=username)
@@ -128,14 +130,14 @@ def profile(request):
             alldetails = {'name': username,
                           'userprofile': userprofile,
                           }
-            return render(request, 'newprofile.html', {'output': alldetails})
+            return render(request, 'newprofile.html', {'output': alldetails,'Friend_list': Friend_list})
 
         else:
             posts = Post.objects.filter(user=userprofile)
             alldetails = {'name': request.user.username,
                           'userprofile': userprofile,
                           }
-            return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts})
+            return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts,'Friend_list': Friend_list})
 
 
 def postuploading(request):
@@ -165,6 +167,7 @@ def search(request):
     requested_userid = request.user.id
     searched_name = User.objects.filter(username=searched_details)
     print(searched_name, requested_userid)
+    Friend_list = Friends.objects.filter(name=searched_details)
     if searched_name.count() == 0:
         return HttpResponse(searched_details+" does not exist")
     else:
@@ -177,7 +180,7 @@ def search(request):
                           'userprofile': None,
                           'searchedby': requested_userid,
                           }
-            return render(request, 'viewprofile.html', {'output': alldetails})
+            return render(request, 'viewprofile.html', {'output': alldetails,'Friend_list': Friend_list})
         else:
             userprofile = Profile.objects.get(user=username)
             postscheck = Post.objects.all().filter(user=username)
@@ -187,7 +190,7 @@ def search(request):
                               'userprofile': userprofile,
                               'searchedby': requested_userid,
                               }
-                return render(request, 'viewprofile.html', {'output': alldetails})
+                return render(request, 'viewprofile.html', {'output': alldetails,'Friend_list': Friend_list})
 
             else:
                 posts = Post.objects.filter(user=searched_details)
@@ -196,7 +199,7 @@ def search(request):
                               'userprofile': userprofile,
                               'searchedby': requested_userid,
                               }
-                return render(request, 'viewprofile.html', {'output': alldetails, 'posts': posts})
+                return render(request, 'viewprofile.html', {'output': alldetails, 'posts': posts,'Friend_list': Friend_list})
 
 
 def like_post(request):
@@ -231,22 +234,21 @@ def like_post(request):
             return JsonResponse({'likes': post.no_of_likes, 'post_id': postid})
 
 
-def postComment(request,id):
+def postComment(request):
     
     if request.method == "POST":
         
-
-        blogpost = Post.objects.get(id=id)
+        id=request.POST.get('postid')
         comment=request.POST.get('comment')
-        comment = request.POST.get('comment')
         post = Post.objects.get(id=id)
         name=request.user.username
         body=comment
+        print(body,comment,id)
         comments=Comment.objects.create(post=post,name=name,body=body)
         name = request.user.username
         body = comment
         comments.save()
-        return redirect('profile')
+        return JsonResponse({'comment':body})
     
 
 def addrequest(request):

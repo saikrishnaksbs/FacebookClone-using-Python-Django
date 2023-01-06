@@ -87,9 +87,9 @@
           <div class="features">
             <span>Friends</span>
             <div class="images-friends">
-              <div></div>
-              <div></div>
-              <div></div>
+              {% for friend in Friend_list %}
+              <div><img src="{{friend.profile.profileimg.url}}" /></div>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -148,6 +148,7 @@
               <button class="like-button" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.id_user}}">Like</button>
 
               <button>Comment</button>
+
               <button class="dropdown">Post Options<div class="dropdown-content">
                 <a href="postdeletion/{{post.id}}">Delete Post</a>
               </div></button>
@@ -161,11 +162,10 @@
                 </div>
               </div>
               <div class="comment-div">
-                <form action="/postComment/{{post.id}}" method="post">
+                <form class="comment-form" postid="{{post.id}}">
                   {% csrf_token %}
-                  <input type="text" name="comment" placeholder="Enter comment here">
-                  
-                  <input type="submit" value="Send">
+                  <textarea class="comment-text{{post.id}}"></textarea>
+                 <button type="submit">Comment</button>
                  </form>
               </div>
             </div>
@@ -173,6 +173,7 @@
                 <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{comment.body}} - {{comment.name}}</h1>
                 <br>
               {% endfor %}
+              <h1 id="comment{{post.id}}"></h1>
             {% endfor %}
   
           </div>
@@ -196,6 +197,31 @@
           }
         });
       });
+
+      $(document).ready(function(){
+        $(".comment-form").submit(function(event){
+          var postid= $(this).attr("postid");
+          var comment= $(".comment-text"+postid).val()
+          console.log(postid,comment)
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: '/postComment',
+            data: {
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+              comment: $(".comment-text"+postid).val(),
+              'postid':postid
+            },
+            success: function(response){
+              console.log(response.comment)
+              $("#comment"+postid).text(response.comment);
+              $('.comment-text'+postid).val('');
+            }
+          });
+        });
+      });
+
+
     </script>
   </body>
 </html>

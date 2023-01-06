@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static '/css/friendlist.css' %}">
+    <link rel="stylesheet" href="{% static '/css/allfriendslist.css' %}">
     <title>Friends List</title>
   </head>
   <body>
@@ -11,16 +11,16 @@
     <div class="header">
         <h1>Facebook</h1>
     </div>
-    <center><h3>Your Friend Requests</h3></center>
+    <center><h3>Your Friends List</h3>  </center>
     
     {% for friend in Friend_list %}
-        
+    
     <div id="friends-list">
       <div class="friend">
+        <img src="{{friend.profile.profileimg.url}}"  width="50px"/>
         <div class="name">{{friend.friends}}</div>
       </div>
     </div>
     {% endfor %}
   </body>
-
 </html>
