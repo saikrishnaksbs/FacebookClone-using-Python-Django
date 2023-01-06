@@ -16,6 +16,8 @@ class Profile(models.Model):
         upload_to='profile_images', default='profile_images/blank-profile-picture.png')
     location = models.CharField(max_length=100, blank=True)
     no_of_friends = models.IntegerField(default=0)
+    no_of_followers = models.IntegerField(default=0)
+    verified = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username
@@ -42,7 +44,8 @@ class LikePost(models.Model):
 
 
 class Friends(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,related_name='profile', on_delete=models.CASCADE)
+    name=models.CharField(max_length=100, blank=True)
     friends = models.CharField(max_length=100, blank=True)
 
 

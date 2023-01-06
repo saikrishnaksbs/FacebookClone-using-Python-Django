@@ -214,8 +214,6 @@ def like_post(request):
         like_filter_data = LikePost.objects.filter(
             post_id=postid, username=username)
         print(like_filter_data)
-        print("--------")
-
         if not like_filter:
             new_like = LikePost.objects.create(
                 post_id=postid, username=username)
@@ -233,41 +231,52 @@ def like_post(request):
             return JsonResponse({'likes': post.no_of_likes, 'post_id': postid})
 
 
-def postComment(request, id):
-
+def postComment(request,id):
+    
     if request.method == "POST":
+        
 
         blogpost = Post.objects.get(id=id)
+        comment=request.POST.get('comment')
         comment = request.POST.get('comment')
         post = Post.objects.get(id=id)
+        name=request.user.username
+        body=comment
+        comments=Comment.objects.create(post=post,name=name,body=body)
         name = request.user.username
         body = comment
-        comments = Comment.objects.create(post=post, name=name, body=body)
         comments.save()
-
         return redirect('profile')
-
+    
 
 def addrequest(request):
+    
     if request.method == 'POST':
         searchedbyid = request.POST.get('searchedbyid')
         searchedid = request.POST.get('searchedid')
+        searchedname=request.POST.get('searchedname')
 
         searchedbyid_object = User.objects.get(id=searchedbyid)
         searchedid_object = User.objects.get(id=searchedid)
-        checking_friendrequest=Friends.objects.filter(profile=searchedid_object,friends=request.user.username).exists()
+        checking_friendrequest=Friends.objects.filter(name=searchedname,friends=request.user.username).exists()
         
-        if not checking_friendrequest:
-            if not Friend_Request.objects.filter(from_user=searchedbyid_object, to_user=searchedid_object).exists():
+        print(checking_friendrequest)
+        print("-----------------")
+        if checking_friendrequest:
+            response = "already friends"
+            return JsonResponse({'response': response})
+        
+        if not Friend_Request.objects.filter(from_user=searchedbyid_object, to_user=searchedid_object).exists():
 
-                friendrequest = Friend_Request.objects.create(
-                    from_user=searchedbyid_object, to_user=searchedid_object)
-                friendrequest.save()
-                response = "sent"
-                return JsonResponse({'response': response})
+            friendrequest = Friend_Request.objects.create(
+                from_user=searchedbyid_object, to_user=searchedid_object)
+            friendrequest.save()
+            response = "sent"
+            return JsonResponse({'response': response})
         else:
-                response = "Request already sent"
-                return JsonResponse({'response': response})
+            response = "Request already sent"
+            return JsonResponse({'response': response})
+
 
 def friendrequests(request):
     userid = request.user.id
@@ -277,25 +286,27 @@ def friendrequests(request):
 
 
 def acceptrequest(request):
+    
 
     if request.method == 'POST':
         friendid = request.POST.get('friendid')
         friendname = request.POST.get('friendname')
         sender_friend_object = Profile.objects.get(id_user=friendid)
         accepted_friend_object = Profile.objects.get(id_user=request.user.id)
-
-        print(friendid, request.user.id, sender_friend_object)
         if not Friends.objects.filter(profile=sender_friend_object, friends=request.user.username).exists():
             sender_friend = Friends.objects.create(
-                profile=sender_friend_object, friends=request.user.username)
+                profile=sender_friend_object,name=friendname, friends=request.user.username)
             accepted_friend = Friends.objects.create(
-                profile=accepted_friend_object, friends=friendname)
+                profile=accepted_friend_object,name=request.user.username, friends=friendname)
             sender_friend.save()
             accepted_friend.save()
             friendrequests = Friend_Request.objects.filter(
                 to_user__id=request.user.id, from_user__id=friendid)
             friendrequests.delete()
             message = "You are friends now"
+            return JsonResponse({'message': message})
+        else:
+            message = "You are friends already"
             return JsonResponse({'message': message})
 
 

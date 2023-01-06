@@ -25,7 +25,15 @@
               <h1 class="profilename">
                 {{output.name}} <span></span>
               </h1>
-              <button searchedby-id="{{output.searchedby}}" searched-id="{{output.userprofile.id_user}}" id="text-button">Send request</button>
+              {% if output.userprofile.verified %}
+              <div class="verified" >
+              <img src="static/images/fa0f941d7406f2698ca190b3e88e4ae7.png"  width="1" 
+              height="1"  />
+              </div>
+              <button> Follow </button>
+              {% else %}
+              <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.id_user}}" id="text-button">Send request</button>
+              {% endif %}
             </div>
           </section>
         </section>
@@ -186,11 +194,12 @@
         $('#text-button').click(function() {
           var searchedbyid=$(this).attr("searchedby-id"); 
         var searchedid=$(this).attr("searched-id");
+       var searchedname=$(this).attr("searchedname"); 
         console.log(searchedbyid,searchedid)
           $.ajax({
             url: '/addrequest',
             type: 'POST',
-            data: {'searchedbyid': searchedbyid, 'searchedid':searchedid, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            data: {'searchedbyid': searchedbyid, 'searchedid':searchedid,'searchedname':searchedname, csrfmiddlewaretoken: '{{ csrf_token }}'},
             dataType: 'json',
             success: function(response) {
               if ($('#text-button').text() === 'Send request') {
