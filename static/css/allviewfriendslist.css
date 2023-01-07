@@ -1,0 +1,38 @@
+.header {
+    background-color: #3b5998;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.friend-list {
+    text-align: left;
+    display: flex;
+}
+
+.friend {
+    display: flex;
+ 
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    column-gap: 20px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.friend button {
+    padding: 5px;
+    background-color: #3b5998;
+    color: aliceblue;
+}
+
+ .name {
+    font-size: 25px;
+}
+.images{
+    height: 50px;
+    width: 50px;
+}

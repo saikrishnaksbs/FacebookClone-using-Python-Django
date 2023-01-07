@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,related_name='profile', on_delete=models.CASCADE, unique=True, error_messages={
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, unique=True, error_messages={
         'unique': 'This field must be unique.'
     })
-    id_user = models.IntegerField()
+    ids = models.IntegerField()
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(
         upload_to='profile_images', default='profile_images/blank-profile-picture.png')
@@ -44,8 +44,9 @@ class LikePost(models.Model):
 
 
 class Friends(models.Model):
-    profile = models.ForeignKey(Profile,related_name='friends', on_delete=models.CASCADE)
-    name=models.CharField(max_length=100, blank=True)
+    profile = models.ForeignKey(
+        Profile, related_name='friends', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, blank=True)
     friends = models.CharField(max_length=100, blank=True)
 
 
@@ -76,3 +77,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Chat(models.Model):
+    sender = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="receiver"
+    )
+    sendersname = models.CharField(max_length=40, blank=True)
+    receiversname = models.CharField(max_length=40, blank=True)
+    message = models.TextField(max_length=400)
+    created = models.DateTimeField(default=datetime.now)
+

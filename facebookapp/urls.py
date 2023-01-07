@@ -19,4 +19,10 @@ urlpatterns = [
     path('acceptrequest', views.acceptrequest, name='acceptrequest'),
     path('rejectrequest', views.rejectrequest, name='rejectrequest'),
     path('friendslist/<int:id>', views.friendslist, name='friendslist'),
+    path('removefriend', views.removefriend, name='removefriend'),
+    path('messagelist/<int:id>', views.messagelist, name='messagelist'),
+    path('sendmessage/<str:friends>', views.sendmessage, name='sendmessage'),
+    path('tomessage', views.tomessage, name='tomessage'),
+    path('getmessage/<str:friendname>', views.getmessage, name='getmessage'),
+    path('allfriendslist/<int:id>', views.allfriendslist, name='allfriendslist'),
 ]

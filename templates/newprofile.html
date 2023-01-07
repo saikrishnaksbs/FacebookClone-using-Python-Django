@@ -9,7 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/css/newprofile.css' %}" />
   </head>
-
   <body>
     {% csrf_token %}
     <div class="header">
@@ -19,7 +18,7 @@
     <div class="search-navbar">
       <a href="#">Home</a>
       <a href="#">Profile</a>
-      <a href="#">Messages</a>
+      <a href="/messagelist/{{output.userprofile.ids}}">Messages</a>
       <a href="/friendrequests">Friend Requests</a>
       <a href="/logout">logout</a>
       <a href="/settings">settings</a>
@@ -49,7 +48,7 @@
           <ul>
             <li class="navbar-items">Timeline</li>
             <li>About</li>
-            <a href="/friendslist/{{output.userprofile.id_user}}"><li>Friends</li></a>
+            <a href="/friendslist/{{output.userprofile.ids}}"><li>Friends</li></a>
             <li>Photos</li>
             <li>More </li>
           </ul>
@@ -145,7 +144,7 @@
 
             <div class="like-and-comment">
              
-              <button class="like-button" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.id_user}}">Like</button>
+              <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}">Like</button>
 
               <button>Comment</button>
 
@@ -175,7 +174,6 @@
               {% endfor %}
               <h1 id="comment{{post.id}}"></h1>
             {% endfor %}
-  
           </div>
          </div>
         </div>
@@ -185,6 +183,7 @@
       $('.like-button').click(function() {
         var postId= $(this).attr("data-post-id");
         var profileid=$(this).attr("data-userprofile-id");
+        
         console.log(postId,profileid)
         $.ajax({
           url: '/like-post',
@@ -194,6 +193,13 @@
           success: function(response) {
             console.log(response.likes,response.post_id)
             $('#like-count-'+postId).text("liked by "+response.likes+ " people");
+            var button = $('#'+postId+profileid);
+            if (button.css('color') === 'rgb(0, 0, 0)') {
+              button.css('color', 'rgb(0, 0, 255)');
+            } else {
+              button.css('color', 'rgb(0, 0, 0)');
+            }
+            
           }
         });
       });
@@ -220,8 +226,6 @@
           });
         });
       });
-
-
     </script>
   </body>
 </html>

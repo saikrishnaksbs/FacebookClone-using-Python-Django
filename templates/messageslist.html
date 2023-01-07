@@ -20,27 +20,11 @@
         <img src="{{friend.profile.profileimg.url}}" width="50px"/>
         <div class="name">{{friend.friends}}</div>
         <div class="friendbuttons{{friend.friends}}">
-        <button class="friendbutton" friendname="{{friend.friends}}" friendid="{{friend.profile.ids}}">Remove Friend</button>
+      <a href="/sendmessage/{{friend.friends}}"><button >Send message</button></a> 
       </div>
       </div>
     </div>
     {% endfor %}
-<script>
-      $('.friendbutton').click(function() {
-      var friendname= $(this).attr("friendname");
-      var friendid=$(this).attr("friendid")
-      console.log(friendname,friendid)
-      $.ajax({
-        url: '/sendmessage',
-        type: 'POST',
-        data: {'friendname': friendname,'friendid':friendid ,csrfmiddlewaretoken: '{{ csrf_token }}'},
-        dataType: 'json',
-        success: function(response) {
-          console.log(response.message)
-          $('.friendbuttons'+friendname).text(response.message);
-        }
-      });
-    });
-</script>
+
   </body>
 </html>

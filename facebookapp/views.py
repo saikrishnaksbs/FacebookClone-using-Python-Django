@@ -11,7 +11,7 @@ from django.db import connection
 from django.db.models import OuterRef, Subquery
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile, Post, Comment, LikePost, Friend_Request, Friends
+from .models import Profile, Post, Comment, LikePost, Friend_Request, Friends, Chat
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 import datetime
@@ -38,14 +38,14 @@ def signup(request):
                 return redirect('')
             elif User.objects.filter(email=Email_Address).exists():
                 messages.info(request, 'Email already taken')
-                return redirect('')
+                return redirect('signup')
             else:
                 user = User.objects.create_user(username=Username, password=Password,
                                                 email=Email_Address, first_name=First_name, last_name=Last_name)
                 user.save()
                 user_model = User.objects.get(username=Username)
                 new_profile = Profile.objects.create(
-                    user=user_model, id_user=user_model.id)
+                    user=user_model, ids=user_model.id)
                 new_profile.save()
                 return redirect('login')
 
@@ -113,15 +113,15 @@ def settings(request):
 
 def profile(request):
     username = User.objects.get(username=request.user.username)
-    usercheck = Profile.objects.all().filter(id_user=request.user.id)
-    friendsnames=[]
+    usercheck = Profile.objects.all().filter(ids=request.user.id)
+    friendsnames = []
     Friend_list = Friends.objects.filter(profile_id=request.user.id)
 
     if usercheck.count() == 0:
         alldetails = {'name': username,
                       'userprofile': None,
                       }
-        return render(request, 'newprofile.html', {'output': alldetails,'Friend_list': Friend_list})
+        return render(request, 'newprofile.html', {'output': alldetails, 'Friend_list': Friend_list})
     else:
         userprofile = Profile.objects.get(user=username)
         postscheck = Post.objects.all().filter(user=username)
@@ -130,14 +130,14 @@ def profile(request):
             alldetails = {'name': username,
                           'userprofile': userprofile,
                           }
-            return render(request, 'newprofile.html', {'output': alldetails,'Friend_list': Friend_list})
+            return render(request, 'newprofile.html', {'output': alldetails, 'Friend_list': Friend_list})
 
         else:
             posts = Post.objects.filter(user=userprofile)
             alldetails = {'name': request.user.username,
                           'userprofile': userprofile,
                           }
-            return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts,'Friend_list': Friend_list})
+            return render(request, 'newprofile.html', {'output': alldetails, 'posts': posts, 'Friend_list': Friend_list})
 
 
 def postuploading(request):
@@ -174,13 +174,13 @@ def search(request):
         username = User.objects.get(username=searched_details)
 
         print(username, username.id)
-        usercheck = Profile.objects.all().filter(id_user=username.id)
+        usercheck = Profile.objects.all().filter(ids=username.id)
         if usercheck.count() == 0:
             alldetails = {'name': searched_details,
                           'userprofile': None,
                           'searchedby': requested_userid,
                           }
-            return render(request, 'viewprofile.html', {'output': alldetails,'Friend_list': Friend_list})
+            return render(request, 'viewprofile.html', {'output': alldetails, 'Friend_list': Friend_list})
         else:
             userprofile = Profile.objects.get(user=username)
             postscheck = Post.objects.all().filter(user=username)
@@ -190,7 +190,7 @@ def search(request):
                               'userprofile': userprofile,
                               'searchedby': requested_userid,
                               }
-                return render(request, 'viewprofile.html', {'output': alldetails,'Friend_list': Friend_list})
+                return render(request, 'viewprofile.html', {'output': alldetails, 'Friend_list': Friend_list})
 
             else:
                 posts = Post.objects.filter(user=searched_details)
@@ -199,7 +199,7 @@ def search(request):
                               'userprofile': userprofile,
                               'searchedby': requested_userid,
                               }
-                return render(request, 'viewprofile.html', {'output': alldetails, 'posts': posts,'Friend_list': Friend_list})
+                return render(request, 'viewprofile.html', {'output': alldetails, 'posts': posts, 'Friend_list': Friend_list})
 
 
 def like_post(request):
@@ -235,39 +235,40 @@ def like_post(request):
 
 
 def postComment(request):
-    
+
     if request.method == "POST":
-        
-        id=request.POST.get('postid')
-        comment=request.POST.get('comment')
+
+        id = request.POST.get('postid')
+        comment = request.POST.get('comment')
         post = Post.objects.get(id=id)
-        name=request.user.username
-        body=comment
-        print(body,comment,id)
-        comments=Comment.objects.create(post=post,name=name,body=body)
+        name = request.user.username
+        body = comment
+        print(body, comment, id)
+        comments = Comment.objects.create(post=post, name=name, body=body)
         name = request.user.username
         body = comment
         comments.save()
-        return JsonResponse({'comment':body})
-    
+        return JsonResponse({'comment': body})
+
 
 def addrequest(request):
-    
+
     if request.method == 'POST':
         searchedbyid = request.POST.get('searchedbyid')
         searchedid = request.POST.get('searchedid')
-        searchedname=request.POST.get('searchedname')
+        searchedname = request.POST.get('searchedname')
 
         searchedbyid_object = User.objects.get(id=searchedbyid)
         searchedid_object = User.objects.get(id=searchedid)
-        checking_friendrequest=Friends.objects.filter(name=searchedname,friends=request.user.username).exists()
-        
+        checking_friendrequest = Friends.objects.filter(
+            name=searchedname, friends=request.user.username).exists()
+
         print(checking_friendrequest)
         print("-----------------")
         if checking_friendrequest:
             response = "already friends"
             return JsonResponse({'response': response})
-        
+
         if not Friend_Request.objects.filter(from_user=searchedbyid_object, to_user=searchedid_object).exists():
 
             friendrequest = Friend_Request.objects.create(
@@ -288,18 +289,17 @@ def friendrequests(request):
 
 
 def acceptrequest(request):
-    
 
     if request.method == 'POST':
         friendid = request.POST.get('friendid')
         friendname = request.POST.get('friendname')
-        sender_friend_object = Profile.objects.get(id_user=friendid)
-        accepted_friend_object = Profile.objects.get(id_user=request.user.id)
+        sender_friend_object = Profile.objects.get(ids=friendid)
+        accepted_friend_object = Profile.objects.get(ids=request.user.id)
         if not Friends.objects.filter(profile=sender_friend_object, friends=request.user.username).exists():
             sender_friend = Friends.objects.create(
-                profile=sender_friend_object,name=friendname, friends=request.user.username)
+                profile=sender_friend_object, name=friendname, friends=request.user.username)
             accepted_friend = Friends.objects.create(
-                profile=accepted_friend_object,name=request.user.username, friends=friendname)
+                profile=accepted_friend_object, name=request.user.username, friends=friendname)
             sender_friend.save()
             accepted_friend.save()
             friendrequests = Friend_Request.objects.filter(
@@ -326,6 +326,82 @@ def rejectrequest(request):
 
 def friendslist(request, id):
     print(id)
-    profile_details = Profile.objects.get(id_user=id)
+    profile_details = Profile.objects.get(ids=id)
     Friend_list = Friends.objects.filter(profile=profile_details)
     return render(request, 'allfriendslist.html', {'Friend_list': Friend_list})
+
+
+def allfriendslist(request, id):
+    print(id)
+    profile_details = Profile.objects.get(ids=id)
+    Friend_list = Friends.objects.filter(profile=profile_details)
+    return render(request, 'allviewfriendslist.html', {'Friend_list': Friend_list})
+
+
+def removefriend(request):
+
+    if request.method == 'POST':
+        friendname = request.POST.get('friendname')
+        friendid = request.POST.get('friendid')
+        adminname = request.user.username
+        adminobject = Profile.objects.get(user__username=friendname)
+        friendobjeject = Profile.objects.get(ids=friendid)
+        print(friendobjeject, adminobject)
+        adminlist = Friends.objects.filter(name=friendname, friends=adminname)
+        friendlist = Friends.objects.filter(name=adminname, friends=friendname)
+        print(adminlist, friendlist)
+        adminlist.delete()
+        friendlist.delete()
+        message = "Friend Deleted"
+        return JsonResponse({'message': message})
+
+
+def messagelist(request, id):
+    print(id)
+    profile_details = Profile.objects.get(ids=id)
+    Friend_list = Friends.objects.filter(profile=profile_details)
+    return render(request, 'messageslist.html', {'Friend_list': Friend_list})
+
+
+def sendmessage(request, friends):
+    profile_details = Profile.objects.get(user__username=friends)
+    messagedetails = Friends.objects.filter(profile=profile_details)
+    return render(request, 'message.html', {'messagedetails': messagedetails, 'friendname': friends})
+
+
+def tomessage(request):
+
+    if request.method == "POST":
+        print("in tomessages")
+        sender = request.POST.get('username')
+        receiver = request.POST.get('friendsname')
+        message = request.POST.get("message")
+        print(sender, receiver, message)
+        senderprofile = Profile.objects.get(user__username=sender)
+        receiverprofile = Profile.objects.get(user__username=receiver)
+        print(senderprofile,receiverprofile)
+
+        createchat=Chat.objects.create(sender=senderprofile,
+                            receiver=receiverprofile,
+                            sendersname=sender,
+                            receiversname=receiver,
+                            message=message,
+                            )
+        createchat.save()
+        print("chat created")
+        message = "Message saved"
+        return JsonResponse({'message': message})
+
+
+def getmessage(request, friendname):
+
+    if request.method == "GET":
+        sender = Profile.objects.get(ids=request.user.id)
+        receiver = Profile.objects.get(user__username=friendname)
+        
+        allmessages = Chat.objects.filter(
+            Q(sender=sender, receiver=receiver)
+            | Q(sender=receiver, receiver=sender)
+        )
+        chats = list(allmessages.values())
+        return JsonResponse({'chats': chats})

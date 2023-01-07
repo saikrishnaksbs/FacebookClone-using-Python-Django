@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static '/css/messageslist.css' %}">
+    <link rel="stylesheet" href="{% static '/css/allviewfriendslist.css' %}">
     <title>Friends List</title>
   </head>
   <body>
@@ -20,7 +20,6 @@
         <img src="{{friend.profile.profileimg.url}}" width="50px"/>
         <div class="name">{{friend.friends}}</div>
         <div class="friendbuttons{{friend.friends}}">
-        <button class="friendbutton" friendname="{{friend.friends}}" friendid="{{friend.profile.ids}}">Remove Friend</button>
       </div>
       </div>
     </div>

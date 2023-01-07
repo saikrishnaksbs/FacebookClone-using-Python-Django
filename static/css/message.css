@@ -1,0 +1,52 @@
+body {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+      input[type=text], select {
+      width: 80%;
+      padding: 12px 20px;
+      margin:auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+      }
+
+      input[type=submit] {
+      width: 50%;
+      margin: auto;
+      background-color: #0901ff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      padding: 14px 20px;
+      margin: auto;
+      margin-top: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      }
+  
+  
+      div {
+      border-radius: 5px;
+      background-color: #f1efef;
+      padding: 20px;
+      }
+  
+  .container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  } 
