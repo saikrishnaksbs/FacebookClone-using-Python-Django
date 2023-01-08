@@ -9,31 +9,35 @@
   <body>
     <center>
       <div class="content">
-
         <div class="content_details">
-
           <div class="title">
             Post Status
             <a href="/login"></a>
           </div>
 
-          <form action="postuploading" method="post"
-            enctype="multipart/form-data">
+          <form
+            action="postuploading"
+            method="post"
+            enctype="multipart/form-data"
+          >
             {% csrf_token %}
 
             <div class="field">
-              <input type="text" name="caption" placeholder="caption" required
-                />
+              <input
+                type="text"
+                name="caption"
+                placeholder="caption"
+                required
+              />
             </div>
 
             <div class="field">
-              <input type="file" name="image" value="image" />
+              <input type="file" name="image" value="image" required />
             </div>
 
             <div class="field">
               <input type="submit" value="Post" />
             </div>
-
           </form>
         </div>
       </div>

@@ -8,7 +8,6 @@
   </head>
   <body>
     <div class="login_form">
-
       <div class="login_message">
         <h1>facebook</h1>
         <p>
@@ -18,12 +17,11 @@
       </div>
 
       <div class="login_content">
-
         <div class="title">
           Log in
-          <a href="/login">
+          <!-- <a href="/login">
             <img src="{% static 'images/logo-facebookpng-32242.png' %}" />
-          </a>
+          </a> -->
         </div>
 
         <form action="login" method="post">
@@ -35,7 +33,7 @@
               name="username"
               placeholder="User Name"
               required
-              />
+            />
           </div>
 
           <div class="field">
@@ -44,7 +42,7 @@
               name="password"
               placeholder="Password"
               required
-              />
+            />
           </div>
 
           <div class="field">
@@ -54,7 +52,6 @@
           <center>
             <a href="#">Forgotten password?</a>
           </center>
-
         </form>
       </div>
     </div>
@@ -66,6 +63,5 @@
         {% endfor %}
       </div>
     </center>
-
   </body>
 </html>

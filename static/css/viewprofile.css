@@ -271,7 +271,7 @@ body {
 }
 
 .features ul li:hover {
-	color: rgb(16, 35, 207) !important;
+	color: rgb(16, 35, 207);
 }
 
 
@@ -301,11 +301,11 @@ body {
 }
 
 .Photos-icon-bg {
-	background-color: #93D22D !important;
+	background-color: #93D22D;
 }
 
 .Friends-icon-bg {
-	background-color: #F4004F !important;
+	background-color: #F4004F;
 }
 
 
@@ -422,7 +422,7 @@ body {
 }
 
 .post-name-info .date-public span {
-	font-size: 14px !important;
+	font-size: 14px;
 	color: #3337;
 	font-weight: 500;
 }
@@ -485,7 +485,7 @@ body {
 }
 
 .like-and-comment button span {
-	font-size: 18px !important;
+	font-size: 18px;
 }
 
 .comments {
@@ -546,15 +546,3 @@ body {
 .comment-div ul li:active {
 	background-color: #3332;
 }
-
-@media screen and (max-width: 1199px) {
-	.cover_profile_pics {
-		width: 100%;
-	}
-}
-
-@media screen and (max-width: 991px) {}
-
-@media screen and (max-width: 767px) {}
-
-@media screen and (max-width: 575px) {}

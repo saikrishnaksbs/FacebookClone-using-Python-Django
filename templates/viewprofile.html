@@ -32,7 +32,10 @@
               </div>
               <button> Follow </button>
               {% else %}
+              {% if request.user in output.userprofile.friendnames.all %}
+              {% else %}
               <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="text-button">Send request</button>
+              {% endif %}
               {% endif %}
             </div>
           </section>
@@ -68,35 +71,30 @@
 
           <div class="features">
             <span>Photos</span>
-
             <div class="images-photos">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+              {% for post in posts %}
+              <img src="{{post.image.url}}" />
+              {% endfor %}
             </div>
           </div>
-
+            
           <div class="features">
             <span>Friends</span>
             <div class="images-friends">
-              {% for friend in Friend_list %}
-              <div><img src="{{friend.profile.profileimg.url}}" /></div>
+              {% for friend in profileimages %}
+             <div><img src="{{friend.profileimg.url}}" /></div>
               {% endfor %}
             </div>
           </div>
         </div>
 
         <div class="all-posts">
-          
           <div class="features">
             <div class="status-bar">
               <ul>
                <!-- <a href="/postuploading"><li>Status</li></a>  -->
                <li>Status</li>
-               <li>Photo/Video</li>
+               <li>Photo</li>
                 <li>Life Event</li>
               </ul>
             </div>
@@ -109,7 +107,6 @@
                 <textarea placeholder="What's on your mind?"></textarea>
               </div>
             </div>
-
             <div class="post-div">
               <button>Public</button>
               <button class="post-button">Post</button>
@@ -137,7 +134,12 @@
               <img src="{{post.image.url}}" />
             </div>
             <div class="like-and-comment">
-              <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}">Like</button>
+              
+              {% if request.user in post.liked.all %}
+              <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}" style="color: rgb(8, 33, 220);">Like</button>
+              {% else %}
+              <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}" style="color: rgb(0, 0, 0)">Like</button>
+              {% endif %}
               
               <button>Comment</button>
              

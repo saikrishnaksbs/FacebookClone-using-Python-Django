@@ -12,12 +12,10 @@
         <h1>Facebook</h1>
     </div>
     <center><h3>Your Friends List</h3>  </center>
-    
     {% for friend in Friend_list %}
-    
     <div id="friends-list">
       <div class="friend">
-        <img src="{{friend.profile.profileimg.url}}" width="50px"/>
+        <!-- <img src="{{friend.profile.profileimg.url}}" width="50px"/> -->
         <div class="name">{{friend.friends}}</div>
         <div class="friendbuttons{{friend.friends}}">
       <a href="/sendmessage/{{friend.friends}}"><button >Send message</button></a> 
@@ -25,6 +23,5 @@
       </div>
     </div>
     {% endfor %}
-
   </body>
 </html>

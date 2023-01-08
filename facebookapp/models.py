@@ -18,6 +18,8 @@ class Profile(models.Model):
     no_of_friends = models.IntegerField(default=0)
     no_of_followers = models.IntegerField(default=0)
     verified = models.IntegerField(default=0)
+    friendnames = models.ManyToManyField(
+        User, related_name='friendinlist', blank=True)
 
     def __str__(self):
         return self.user.username
@@ -26,10 +28,11 @@ class Profile(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='image_posts')
+    image = models.ImageField(upload_to='image_posts', blank=True)
     caption = models.TextField(blank=True)
     created_ad = models.DateTimeField(default=datetime.now)
     no_of_likes = models.IntegerField(default=0)
+    liked = models.ManyToManyField(User, related_name='likes', blank=True)
 
     def __str__(self):
         return self.user
@@ -38,6 +41,8 @@ class Post(models.Model):
 class LikePost(models.Model):
     post_id = models.CharField(max_length=500)
     username = models.CharField(max_length=100)
+    likedusers = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='likedby')
 
     def __str__(self):
         return self.username
@@ -89,4 +94,3 @@ class Chat(models.Model):
     receiversname = models.CharField(max_length=40, blank=True)
     message = models.TextField(max_length=400)
     created = models.DateTimeField(default=datetime.now)
-

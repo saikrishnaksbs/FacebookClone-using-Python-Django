@@ -12,12 +12,10 @@
         <h1>Facebook</h1>
     </div>
     <center><h3>Your Friends List</h3>  </center>
-    
     {% for friend in Friend_list %}
-    
     <div id="friends-list">
       <div class="friend">
-        <img src="{{friend.profile.profileimg.url}}" width="50px"/>
+        <!-- <img src="{{friend.profile.profileimg.url}}" width="50px"/> -->
         <div class="name">{{friend.friends}}</div>
         <div class="friendbuttons{{friend.friends}}">
         <button class="friendbutton" friendname="{{friend.friends}}" friendid="{{friend.profile.ids}}">Remove Friend</button>
@@ -31,7 +29,7 @@
       var friendid=$(this).attr("friendid")
       console.log(friendname,friendid)
       $.ajax({
-        url: '/sendmessage',
+        url: '/removefriend',
         type: 'POST',
         data: {'friendname': friendname,'friendid':friendid ,csrfmiddlewaretoken: '{{ csrf_token }}'},
         dataType: 'json',

@@ -1,83 +1,85 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="{% static '/css/message.css' %}">
-    </head>
-    <body>
-        {% for friend in messagedetails %}
-        <center><h3>{{friend.name}}</h3></center>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static '/css/message.css' %}" />
+  </head>
+  <body>
+    {% for friend in messagedetails %}
+    <center><h3>{{friend.name}}</h3></center>
+    {% endfor %}
+    <div id="display"></div>
+
+    <div class="container">
+      <form id="post-form">
+        {% csrf_token %} {% for friend in messagedetails %}
+        <input
+          type="hidden"
+          name="username"
+          id="username"
+          value="{{friend.friends}}"
+        />
+        <input
+          type="hidden"
+          name="friendsname"
+          id="friendsname"
+          value="{{friend.name}}"
+        />
         {% endfor %}
-        <div id="display">
-        </div>
-        
-        <div class="container">
-            <form id="post-form">
-                {% csrf_token %}
-                {% for friend in messagedetails %}
-                <input type="hidden" name="username" id="username"
-                    value="{{friend.friends}}" />
-                <input type="hidden" name="friendsname" id="friendsname"
-                    value="{{friend.name}}" />
-                    {% endfor %}
-                <input type="text" name="message" id="message" />
-                
-                <input type="submit" value="Send">
-            </form>
-            
-        </div>
-        
-        <script>
-    $(document).on('submit','#post-form',function(e)
-    {
+        <input type="text" name="message" id="message" />
+        <input type="submit" value="Send" />
+      </form>
+    </div>
+    <script>
+      $(document).on("submit", "#post-form", function (e) {
         e.preventDefault();
-        var username= $('#username').val();
-        var friendsname= $('#friendsname').val();
-        console.log(username,friendsname)
+        var username = $("#username").val();
+        var friendsname = $("#friendsname").val();
+        console.log(username, friendsname);
 
         $.ajax({
-          type:'POST',
-          url:'/tomessage',
-          data:{
-          
-              username:$('#username').val(),
-              friendsname:$('#friendsname').val(),
-              message:$('#message').val(),
-              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          type: "POST",
+          url: "/tomessage",
+          data: {
+            username: $("#username").val(),
+            friendsname: $("#friendsname").val(),
+            message: $("#message").val(),
+            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
           },
-          success: function(data){
-             console.log(data.message)
-          }
+          success: function (data) {
+            console.log(data.message);
+          },
         });
-        document.getElementById('message').value = ''
-      });    
+        document.getElementById("message").value = "";
+      });
 
-      $(document).ready(function(){
-        setInterval(function(){
-            
-            $.ajax({
-                type: 'GET',
+      $(document).ready(function () {
+        setInterval(function () {
+          $.ajax({
+            type: "GET",
 
-                url : "/getmessage/{{friendname}}",
-                
-                success: function(response){
-                    console.log(response);
-                    $("#display").empty();
-                    for (var chat in response.chats)
-                    {
-                        var meessagedetails="<b>"+response.chats[chat].sendersname+"</b><p>"+response.chats[chat].message+"</p>"+response.chats[chat].created+"<br><br>";
-                        $("#display").append(meessagedetails);
-                    }
-                },
-            });
-        },1000);
-        })
+            url: "/getmessage/{{friendname}}",
 
-
-
-</script>
-    </body>
+            success: function (response) {
+              console.log(response);
+              $("#display").empty();
+              for (var chat in response.chats) {
+                var meessagedetails =
+                  "<b>" +
+                  response.chats[chat].sendersname +
+                  "</b><p>" +
+                  response.chats[chat].message +
+                  "</p>" +
+                  response.chats[chat].created +
+                  "<br><br>";
+                $("#display").append(meessagedetails);
+              }
+            },
+          });
+        }, 1000);
+      });
+    </script>
+  </body>
 </html>
