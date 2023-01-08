@@ -149,7 +149,7 @@ def profile(request):
             return render(request, 'newprofile.html', {'output': alldetails, 'friend_list': friend_list, 'profileimages': profileimages})
 
         else:
-            posts = Post.objects.filter(user=userprofile)
+            posts = Post.objects.filter(user=userprofile).order_by('-created_ad')
             alldetails = {'name': request.user.username,
                           'userprofile': userprofile,
                           }
@@ -164,10 +164,14 @@ def postuploading(request):
         user = request.user.username
         image = request.FILES.get('image')
         caption = request.POST['caption']
-
-        new_post = Post.objects.create(user=user, image=image, caption=caption)
-        new_post.save()
-        return redirect('profile')
+        if not image:
+            new_post = Post.objects.create(user=user, caption=caption)
+            new_post.save()
+            return redirect('profile')
+        else:
+            new_post = Post.objects.create(user=user, image=image, caption=caption)
+            new_post.save()
+            return redirect('profile')
 
     else:
         return render(request, 'post.html')
@@ -224,7 +228,7 @@ def search(request):
                 return render(request, 'viewprofile.html', {'output': alldetails, 'profileimages': profileimages})
 
             else:
-                posts = Post.objects.filter(user=searched_details)
+                posts = Post.objects.filter(user=searched_details).order_by('-created_ad')
 
                 alldetails = {'name': searched_details,
                               'userprofile': userprofile,
