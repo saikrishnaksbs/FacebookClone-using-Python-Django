@@ -24,7 +24,7 @@
             <div class="posts">
               <div>
                 <div class="profile-img">
-                  <img src="{{post.liked.profileimg.url}}" />
+                  <img src="{{post.postedby.profileimg.url}}" />
                 </div>
               </div>
 
@@ -52,8 +52,7 @@
               {% endif %}
               <button>Comment</button>
 
-              <a href="postdeletion/{{post.id}}"><button class="dropdown">Delete</button></a>
-              <br>
+            <br>
               
               <br>
               <span id="like-count-{{ post.id }}">liked by {{ post.no_of_likes }} people</span>
@@ -72,8 +71,10 @@
               </div>
             </div>
             {% for comment in post.comments.all %}
+            <img src="{{comment.commentedby.profileimg.url}}" height="25px" width="25px" />
                 <h1>&nbsp; &nbsp;{{comment.name}}</h1>
                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{comment.body}}
+                <br>
               {% endfor %}
               <h1 id="comment{{post.id}}"></h1>
             {% endfor %}

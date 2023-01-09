@@ -30,7 +30,11 @@
               <img src="static/images/fa0f941d7406f2698ca190b3e88e4ae7.png"  width="1" 
               height="1"  />
               </div>
-              <button> Follow </button>
+              {% if request.user in output.userprofile.followedby.all %}
+              <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="unfollow" > Unfollow </button>
+              {% else %}
+              <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="follow" > Follow </button>
+              {% endif %}
               {% else %}
               {% if request.user in output.userprofile.friendnames.all %}
               {% else %}
@@ -241,6 +245,43 @@
           });
         });
       });
+
+      $(document).ready(function() {
+        $('#follow').click(function() {
+          var searchedbyid=$(this).attr("searchedby-id"); 
+        var searchedid=$(this).attr("searched-id");
+       var searchedname=$(this).attr("searchedname"); 
+        console.log(searchedbyid,searchedid)
+          $.ajax({
+            url: '/follow',
+            type: 'POST',
+            data: {'searchedbyid': searchedbyid, 'searchedid':searchedid,'searchedname':searchedname, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            dataType: 'json',
+            success: function(response) {
+                $('#follow').text('Unfollow');
+            }
+          });
+        });
+      });  
+
+
+      $(document).ready(function() {
+        $('#unfollow').click(function() {
+          var searchedbyid=$(this).attr("searchedby-id"); 
+        var searchedid=$(this).attr("searched-id");
+       var searchedname=$(this).attr("searchedname"); 
+        console.log(searchedbyid,searchedid)
+          $.ajax({
+            url: '/unfollow',
+            type: 'POST',
+            data: {'searchedbyid': searchedbyid, 'searchedid':searchedid,'searchedname':searchedname, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            dataType: 'json',
+            success: function(response) {
+                $('#unfollow').text('Follow');
+            }
+          });
+        });
+      });  
 
     </script>
   </body>

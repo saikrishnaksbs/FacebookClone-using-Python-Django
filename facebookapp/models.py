@@ -20,6 +20,8 @@ class Profile(models.Model):
     verified = models.IntegerField(default=0)
     friendnames = models.ManyToManyField(
         User, related_name='friendinlist', blank=True)
+    following=models.ManyToManyField(User,related_name='followinglist', blank=True)
+    followedby=models.ManyToManyField(User,related_name='followerslist', blank=True)
 
     def __str__(self):
         return self.user.username
@@ -34,6 +36,8 @@ class Post(models.Model):
     created_ad = models.DateTimeField(default=datetime.now)
     no_of_likes = models.IntegerField(default=0)
     liked = models.ManyToManyField(User, related_name='likes', blank=True)
+    postedby = models.ForeignKey(
+        Profile, related_name='postedby', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user
@@ -80,6 +84,8 @@ class Comment(models.Model):
     name = models.CharField(max_length=255)
     body = models.TextField()
     date_added = models.DateTimeField(default=datetime.now)
+    commentedby = models.ForeignKey(
+        Profile, related_name='commentedby', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

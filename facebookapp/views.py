@@ -19,13 +19,13 @@ import datetime
 
 def home(request):
     '''Directs to first page of website'''
-    
+
     return render(request, 'home.html')
 
 
 def signup(request):
     '''Directs to signup page'''
-    
+
     if request.method == 'POST':
         First_name = request.POST['first_name']
         Last_name = request.POST['last_name']
@@ -62,7 +62,7 @@ def signup(request):
 
 def login(request):
     '''Directs to login page'''
-    
+
     if request.method == 'POST':
         usernames = request.POST['username']
         passwords = request.POST['password']
@@ -149,7 +149,8 @@ def profile(request):
             return render(request, 'newprofile.html', {'output': alldetails, 'friend_list': friend_list, 'profileimages': profileimages})
 
         else:
-            posts = Post.objects.filter(user=userprofile).order_by('-created_ad')
+            posts = Post.objects.filter(
+                user=userprofile).order_by('-created_ad')
             alldetails = {'name': request.user.username,
                           'userprofile': userprofile,
                           }
@@ -164,12 +165,14 @@ def postuploading(request):
         user = request.user.username
         image = request.FILES.get('image')
         caption = request.POST['caption']
+        profile_of_postedperson=Profile.objects.get(ids=request.user.id)
         if not image:
-            new_post = Post.objects.create(user=user, caption=caption)
+            new_post = Post.objects.create(user=user, caption=caption,postedby=profile_of_postedperson)
             new_post.save()
             return redirect('profile')
         else:
-            new_post = Post.objects.create(user=user, image=image, caption=caption)
+            new_post = Post.objects.create(postedby=profile_of_postedperson,
+                user=user, image=image, caption=caption)
             new_post.save()
             return redirect('profile')
 
@@ -190,14 +193,14 @@ def postdeletion(request, id):
 @transaction.atomic
 def search(request):
     '''Directs to searched page'''
-    
+
     searched_name = request.GET
     searched_details = searched_name.get("name")
     requested_userid = request.user.id
     searched_name = User.objects.filter(username=searched_details)
     Friend_list = list(Friends.objects.filter(
         name=searched_details).values('friends'))
-    
+
     allfriends = []
     for friend in Friend_list:
         allfriends.append(friend['friends'])
@@ -228,7 +231,8 @@ def search(request):
                 return render(request, 'viewprofile.html', {'output': alldetails, 'profileimages': profileimages})
 
             else:
-                posts = Post.objects.filter(user=searched_details).order_by('-created_ad')
+                posts = Post.objects.filter(
+                    user=searched_details).order_by('-created_ad')
 
                 alldetails = {'name': searched_details,
                               'userprofile': userprofile,
@@ -241,20 +245,20 @@ def search(request):
 @transaction.atomic
 def like_post(request):
     '''Directs to like page'''
-    
+
     if request.method == 'POST':
-        
+
         postid = request.POST.get('post_id')
         profileid = request.POST.get('profile_id')
         username = request.user.username
         post = Post.objects.get(id=postid)
-        
+
         likedusers = User.objects.get(id=request.user.id)
         like_filter = LikePost.objects.filter(
             post_id=postid, username=username).exists()
         like_filter_data = LikePost.objects.filter(
             post_id=postid, username=username)
-        
+
         if not like_filter:
             print("added like")
             new_like = LikePost.objects.create(
@@ -282,18 +286,19 @@ def postComment(request):
     '''Here you can post your comments'''
 
     if request.method == "POST":
-        
+
         id = request.POST.get('postid')
         comment = request.POST.get('comment')
         post = Post.objects.get(id=id)
         name = request.user.username
+        profile_of_commenter=Profile.objects.get(ids=request.user.id)
         body = comment
         print(body, comment, id)
-        comments = Comment.objects.create(post=post, name=name, body=body)
+        comments = Comment.objects.create(post=post,commentedby=profile_of_commenter, name=name, body=body)
         name = request.user.username
         body = comment
         comments.save()
-        return JsonResponse({'comment': body,'name':name})
+        return JsonResponse({'comment': body, 'name': name})
 
 
 @login_required
@@ -302,7 +307,7 @@ def addrequest(request):
     '''Here you can send friend request'''
 
     if request.method == 'POST':
-        
+
         searchedbyid = request.POST.get('searchedbyid')
         searchedid = request.POST.get('searchedid')
         searchedname = request.POST.get('searchedname')
@@ -333,7 +338,7 @@ def addrequest(request):
 @transaction.atomic
 def friendrequests(request):
     '''Here you can collect friendrequests list'''
-    
+
     userid = request.user.id
     friendrequests = Friend_Request.objects.filter(to_user__id=userid)
     print(friendrequests)
@@ -344,13 +349,13 @@ def friendrequests(request):
 @transaction.atomic
 def acceptrequest(request):
     '''Here you can accept the requests'''
-    
+
     if request.method == 'POST':
         friendid = request.POST.get('friendid')
         friendname = request.POST.get('friendname')
-        
+
         print(friendid, friendname)
-        
+
         sender_friend_object = Profile.objects.get(ids=friendid)
         accepted_friend_object = Profile.objects.get(ids=request.user.id)
 
@@ -361,10 +366,10 @@ def acceptrequest(request):
                 profile=sender_friend_object, name=friendname, friends=request.user.username)
             accepted_friend = Friends.objects.create(
                 profile=accepted_friend_object, name=request.user.username, friends=friendname)
-            
+
             sender_friend.save()
             accepted_friend.save()
-            
+
             friendrequests = Friend_Request.objects.filter(
                 to_user__id=request.user.id, from_user__id=friendid)
             friendrequests.delete()
@@ -387,9 +392,9 @@ def acceptrequest(request):
 @transaction.atomic
 def rejectrequest(request):
     '''Here you can reject friends'''
-    
+
     if request.method == 'POST':
-        
+
         friendid = request.POST.get('friendid')
         friendname = request.POST.get('friendname')
         friendrequests = Friend_Request.objects.filter(
@@ -403,7 +408,7 @@ def rejectrequest(request):
 @transaction.atomic
 def friendslist(request, id):
     '''Displays friends list'''
-    
+
     print(id)
     profile_details = Profile.objects.get(ids=id)
     Friend_list = Friends.objects.filter(profile=profile_details)
@@ -414,7 +419,7 @@ def friendslist(request, id):
 @transaction.atomic
 def allfriendslist(request, id):
     '''Displays all friends of a searched person'''
-    
+
     print(id)
     profile_details = Profile.objects.get(ids=id)
     Friend_list = Friends.objects.filter(profile=profile_details)
@@ -425,21 +430,21 @@ def allfriendslist(request, id):
 @transaction.atomic
 def removefriend(request):
     '''Here i can remove my friend'''
-    
+
     if request.method == 'POST':
-        
+
         friendname = request.POST.get('friendname')
         friendid = request.POST.get('friendid')
         adminname = request.user.username
-        
+
         adminobject = Profile.objects.get(user__username=adminname)
         friendobjeject = Profile.objects.get(ids=friendid)
         print(friendobjeject, adminobject)
-        
+
         adminlist = Friends.objects.filter(name=friendname, friends=adminname)
         friendlist = Friends.objects.filter(name=adminname, friends=friendname)
         print(adminlist, friendlist)
-        
+
         adminlist.delete()
         friendlist.delete()
 
@@ -458,7 +463,7 @@ def removefriend(request):
 @transaction.atomic
 def messagelist(request, id):
     '''Here you can fine whom you can message'''
-    
+
     profile_details = Profile.objects.get(ids=id)
     Friend_list = Friends.objects.filter(profile=profile_details)
     return render(request, 'messageslist.html', {'Friend_list': Friend_list})
@@ -468,7 +473,7 @@ def messagelist(request, id):
 @transaction.atomic
 def sendmessage(request, friends):
     '''Here you can create a message'''
-    
+
     profile_details = Profile.objects.get(user__username=friends)
     messagedetails = Friends.objects.filter(profile=profile_details)
     return render(request, 'message.html', {'messagedetails': messagedetails, 'friendname': friends})
@@ -517,6 +522,7 @@ def getmessage(request, friendname):
         chats = list(allmessages.values())
         return JsonResponse({'chats': chats})
 
+
 def postfeed(request):
     username = User.objects.get(username=request.user.username)
     usercheck = Profile.objects.all().filter(ids=request.user.id)
@@ -526,13 +532,61 @@ def postfeed(request):
     for friend in friend_list:
         allfriends.append(friend['friends'])
     profileimages = Profile.objects.filter(user__username__in=allfriends)
-    
+
     print(allfriends)
-    friendsposts = Post.objects.filter(user__in=allfriends).order_by('-created_ad')
+    friendsposts = Post.objects.filter(
+        user__in=allfriends).order_by('-created_ad')
     print(friendsposts)
-    
+
     userprofile = Profile.objects.get(user=username)
     alldetails = {'name': username,
-                          'userprofile': userprofile,
-                          }
-    return render(request, 'postfeed.html', {'output':alldetails,'allposts': friendsposts})
+                  'userprofile': userprofile,
+                  }
+    return render(request, 'postfeed.html', {'output': alldetails, 'allposts': friendsposts})
+
+
+def follow(request):
+    if request.method == 'POST':
+
+        searchedbyid = request.POST.get('searchedbyid')
+        searchedid = request.POST.get('searchedid')
+        searchedname = request.POST.get('searchedname')
+
+        searchedbyid_object = Profile.objects.get(ids=searchedbyid)
+        searchedid_object = Profile.objects.get(ids=searchedid)
+        
+        searchedbyid_user_object = User.objects.get(id=searchedbyid)
+        searchedid_user_object = User.objects.get(id=searchedid)
+        
+        
+        
+        searchedbyid_object.following.add(searchedid_user_object)
+        searchedid_object.followedby.add(searchedbyid_user_object)
+        searchedid_object.no_of_followers=searchedid_object.no_of_followers+1
+        searchedid_object.save()
+        searchedid_object.save()
+        followers_count = searchedid_object.no_of_followers
+        return JsonResponse({'followers_count': followers_count})
+
+def unfollow(request):
+    
+    if request.method == 'POST':
+
+        searchedbyid = request.POST.get('searchedbyid')
+        searchedid = request.POST.get('searchedid')
+        searchedname = request.POST.get('searchedname')
+
+        searchedbyid_object = Profile.objects.get(ids=searchedbyid)
+        searchedid_object = Profile.objects.get(ids=searchedid)
+        
+        searchedbyid_user_object = User.objects.get(id=searchedbyid)
+        searchedid_user_object = User.objects.get(id=searchedid)
+        
+        searchedbyid_object.following.remove(searchedid_user_object)
+        searchedid_object.followedby.remove(searchedbyid_user_object)
+        
+        searchedid_object.no_of_followers=searchedid_object.no_of_followers-1
+        searchedid_object.save()
+        searchedid_object.save()
+        followers_count = searchedid_object.no_of_followers
+        return JsonResponse({'followers_count': followers_count})
