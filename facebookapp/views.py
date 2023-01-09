@@ -293,7 +293,7 @@ def postComment(request):
         name = request.user.username
         body = comment
         comments.save()
-        return JsonResponse({'comment': body})
+        return JsonResponse({'comment': body,'name':name})
 
 
 @login_required
@@ -516,3 +516,23 @@ def getmessage(request, friendname):
         )
         chats = list(allmessages.values())
         return JsonResponse({'chats': chats})
+
+def postfeed(request):
+    username = User.objects.get(username=request.user.username)
+    usercheck = Profile.objects.all().filter(ids=request.user.id)
+    friend_list = list(Friends.objects.filter(name=username).values('friends'))
+    allfriends = []
+    likeposts = list(LikePost.objects.filter(likedusers=username))
+    for friend in friend_list:
+        allfriends.append(friend['friends'])
+    profileimages = Profile.objects.filter(user__username__in=allfriends)
+    
+    print(allfriends)
+    friendsposts = Post.objects.filter(user__in=allfriends).order_by('-created_ad')
+    print(friendsposts)
+    
+    userprofile = Profile.objects.get(user=username)
+    alldetails = {'name': username,
+                          'userprofile': userprofile,
+                          }
+    return render(request, 'postfeed.html', {'output':alldetails,'allposts': friendsposts})

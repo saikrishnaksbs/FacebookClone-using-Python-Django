@@ -15,113 +15,16 @@
       <h1>Facebook</h1>
     </div>
 
-    <div class="search-navbar">
-      <a href="/postfeed">Home</a>
-      <a href="#">Profile</a>
-      <a href="/messagelist/{{output.userprofile.ids}}">Messages</a>
-      <a href="/friendrequests">Friend Requests</a>
-      <a href="/logout">logout</a>
-      <a href="/settings">settings</a>
-
-      <form action="{% url 'search' %}" method="get" class="search-container">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Enter Name">
-        <button type="submit">Search</button>
-      </form>
-    </div>
-
-    <section class="cover_profile_pics">
-      <header class="images">
-        <section class="coverphoto">
-          <img src="i.jpg" />
-          <div class="profilepic">
-           <img src="{{output.userprofile.profileimg.url}}" />
-              <h1 class="profilename">
-                {{output.name}} <span></span>
-              </h1>
-            </div>
-        </section>
-
-        <nav class="navbar">
-          <ul>
-            <li class="navbar-items">Timeline</li>
-            <li>About</li>
-            <a href="/friendslist/{{output.userprofile.ids}}"><li>Friends</li></a>
-            <li>Photos</li>
-            <li>More </li>
-          </ul>
-        </nav>
-      </header>
-
       <section class="all-information">
-        <div class="bio-photos-friends">
-          <div class="features">
-            <span>Intro</span>
-
-            <ul>
-              <li>Name :{{output.userprofile.user}}</li>
-              <li>Bio :{{output.userprofile.bio}}</li>
-              <li>Location :{{output.userprofile.location}}</li>
-            
-            </ul>
-          </div>
-
-          <div class="features">
-            <span>Photos</span>
-
-            <div class="images-photos">
-              
-              {% for post in posts %}
-              {% if post.image %}
-                <img src="{{post.image.url}}" />
-              {% endif %}
-              {% endfor %}
-            </div>
-          </div>
-
-          <div class="features">
-            <span>Friends</span>
-            <div class="images-friends">
-              {% for profilepic in profileimages %}
-            
-              <div><img src="{{profilepic.profileimg.url}}" /></div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
+        
 
         <div class="all-posts">
-          
-          <div class="features">
-            <div class="status-bar">
-              <ul>
-               <a href="/postuploading"><li>Status</li></a> 
-               <li>Photo</li>
-                <li>Life Event</li>
-              </ul>
-            </div>
-
-            <div class="instant-post">
-              <div class="profile-img">
-                <img src="{{output.userprofile.profileimg.url}}" />
-              </div>
-              <div>
-                <textarea placeholder="What's on your mind?"></textarea>
-              </div>
-            </div>
-
-            <div class="post-div">
-              <button>Public</button>
-              <button class="post-button">Post</button>
-            </div>
-          </div>
-
-          {% for post in posts %}
+          {% for post in allposts %}
           <div class="features">
             <div class="posts">
               <div>
                 <div class="profile-img">
-                  <img src="{{output.userprofile.profileimg.url}}" />
+                  <img src="{{post.liked.profileimg.url}}" />
                 </div>
               </div>
 

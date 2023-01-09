@@ -12,7 +12,7 @@
 
 .friend {
     display: flex;
- 
+
     text-align: left;
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -29,10 +29,11 @@
     color: aliceblue;
 }
 
- .name {
+.name {
     font-size: 25px;
 }
-.images{
+
+.images {
     height: 50px;
     width: 50px;
 }

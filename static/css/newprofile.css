@@ -1,4 +1,3 @@
-
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
@@ -184,9 +183,8 @@ body {
 .navbar ul li {
 	display: inline-block;
 	padding: 18px 13px;
-
-	clear: #333;
 	font-size: 18px;
+	color: black;
 	font-weight: 600;
 }
 
@@ -244,7 +242,7 @@ body {
 }
 
 .features ul li:hover {
-	color: rgb(16, 35, 207) ;
+	color: rgb(16, 35, 207);
 }
 
 
@@ -268,18 +266,18 @@ body {
 	background-color: #e9ebee;
 }
 
-.images-friends img{
+.images-friends img {
 	height: 100px;
 	width: 100px;
 	background-color: #e9ebee;
 }
 
 .Photos-icon-bg {
-	background-color: #93D22D ;
+	background-color: #93D22D;
 }
 
 .Friends-icon-bg {
-	background-color: #F4004F ;
+	background-color: #F4004F;
 }
 
 
@@ -382,7 +380,7 @@ body {
 }
 
 .post-name-info .date-public span {
-	font-size: 14px ;
+	font-size: 14px;
 	color: #3337;
 	font-weight: 500;
 }
@@ -444,7 +442,7 @@ body {
 }
 
 .like-and-comment button span {
-	font-size: 18px ;
+	font-size: 18px;
 }
 
 .comments {

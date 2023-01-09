@@ -25,4 +25,5 @@ urlpatterns = [
     path('tomessage', views.tomessage, name='tomessage'),
     path('getmessage/<str:friendname>', views.getmessage, name='getmessage'),
     path('allfriendslist/<int:id>', views.allfriendslist, name='allfriendslist'),
+    path('postfeed', views.postfeed, name='postfeed'),
 ]
