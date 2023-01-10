@@ -295,6 +295,7 @@ def postComment(request):
         comment = request.POST.get('comment')
         post = Post.objects.get(id=id)
         name = request.user.username
+        profileimg=request.user.profile.profileimg.url
         profile_of_commenter = Profile.objects.get(ids=request.user.id)
         body = comment
         print(body, comment, id)
@@ -303,7 +304,7 @@ def postComment(request):
         name = request.user.username
         body = comment
         comments.save()
-        return JsonResponse({'comment': body, 'name': name})
+        return JsonResponse({'comment': body, 'name': name,'profileimg':profileimg,})
 
 
 @login_required

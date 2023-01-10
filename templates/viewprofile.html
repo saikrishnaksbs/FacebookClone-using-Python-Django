@@ -158,7 +158,8 @@
                  </form>
               </div>
             </div>
-
+            
+            <div class="cmmts{{post.id}}">
             {% for comment in post.comments.all %}
             <div class="allcomments">
               <div class="commenterimage">
@@ -173,8 +174,8 @@
                 {{comment.body}}
               </div>
             </div>
-
             {% endfor %}
+          </div>
               <h1 id="comment{{post.id}}"></h1>
             {% endfor %}
           </div>
@@ -246,7 +247,20 @@
             },
             success: function(response){
               console.log(response.comment)
-              $("#comment"+postid).text(response.comment+response.name);
+              $(".cmmts"+postid).append(`<div class="allcomments">
+                <div class="commenterimage">
+                  <img src="` + response.profileimg + `" width="50px" height="40px" />
+                </div>
+                <div class="commentername">
+                  <span>` + response.name + `</span>
+                </div>
+                <div>
+                </div>
+                <div class="commentbody" >
+                  ` + response.comment + `
+                </div>
+              </div>
+              `);
               $('.comment-text'+postid).val('');
             }
           });
