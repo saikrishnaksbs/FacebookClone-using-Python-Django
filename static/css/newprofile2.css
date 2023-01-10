@@ -38,7 +38,7 @@ body {
     justify-content: center;
     align-items: center;
     row-gap: 10px;
-    column-gap: 30px;
+    column-gap: 50px;
     background-color: #e9ebee;
     padding: 15px;
 }
@@ -154,8 +154,8 @@ body {
 
 .navbar ul li {
     display: inline-block;
-    padding: 14px 10px;
-    font-size: 16px;
+    padding: 14px 15px;
+    font-size: 17px;
     color: black;
     font-weight: 600;
 }
@@ -274,9 +274,8 @@ body {
 
 .status-bar ul li {
     display: inline-block;
-    padding: 10px 18px;
-    font-size: 15px;
-
+    padding: 10px 40px;
+    font-size: 17px;
 
 }
 
@@ -436,7 +435,7 @@ body {
 }
 
 
-.allcomments{
+.allcomments {
     padding-top: 20px;
     width: 100%;
     display: grid;
@@ -445,18 +444,19 @@ body {
     grid-column-gap: 1px;
     grid-row-gap: 0px;
 }
-.commenterimage{
+
+.commenterimage {
     height: 30px;
- 
+
 }
-.commentername{
+
+.commentername {
     height: 30px;
-    
+
 }
-.commentbody{
+
+.commentbody {
     height: 30px;
-    
-    
 }
 
 

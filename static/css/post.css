@@ -7,27 +7,22 @@
 
 html,
 body {
-    display: grid;
-    height: 100%;
-    width: 100%;
-    place-items: center;
-    background: rgb(185, 181, 181);
-    color: #1c1e21;
-    direction: ltr;
-    line-height: 1.34;
+
     margin: 0;
     padding: 0;
 }
 
 .content_details {
-    width: 500px;
+    width: 400px;
     background: #fff;
     border-radius: 0.938rem;
     box-shadow: 0px 0.938rem 1.25rem rgba(0, 0, 0, 0.1);
+    margin-top: 200px;
+    margin-left: 25px;
 }
 
 .content_details .title {
-    font-size: 35px;
+    font-size: 25px;
     font-weight: 600;
     text-align: left;
     color: #fff;
@@ -75,11 +70,10 @@ img {
 }
 
 form {
-    width: 500px;
+    width: 390px;
     margin: 0 auto;
     text-align: center;
 }
-
 
 input[type="submit"] {
     background-color: #4caf50;

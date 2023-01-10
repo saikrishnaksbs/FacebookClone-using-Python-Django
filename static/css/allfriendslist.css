@@ -5,35 +5,67 @@
     text-align: center;
 }
 
-.friend-list {
-    text-align: left;
-    display: flex;
-}
 
 .friend {
-    display: flex;
-
-    text-align: left;
     padding: 10px;
     border-bottom: 1px solid #ccc;
     column-gap: 20px;
-    width: 40%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 2fr 2fr;
 }
 
 
 .friend button {
-    padding: 5px;
+    padding: 3px;
+    margin-left: 0px;
     background-color: #3b5998;
     color: aliceblue;
 }
 
 .name {
-    font-size: 25px;
+    font-size: 20px;
 }
 
-.images {
-    height: 50px;
-    width: 50px;
+@media screen and (min-width: 401px) {
+    .header {
+        background-color: #3b5998;
+        color: white;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .friend-list {
+        text-align: left;
+        display: flex;
+    }
+
+    .friend {
+
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        column-gap: 20px;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .friend button {
+        padding: 5px;
+        background-color: #3b5998;
+        color: aliceblue;
+    }
+
+    .name {
+        font-size: 25px;
+    }
+
+    .images {
+        height: 50px;
+        width: 50px;
+    }
 }

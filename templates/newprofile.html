@@ -141,21 +141,17 @@
             </div>
 
             <div class="like-and-comment">
-           
               {% if request.user in post.liked.all %}
               <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}" style="color: rgb(8, 33, 220);">Like</button>
               {% else %}
               <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}" style="color: rgb(0, 0, 0)">Like</button>
               {% endif %}
               <button>Comment</button>
-
               <button>Share</button>
               <span id="like-count-{{ post.id }}">liked by {{ post.no_of_likes }} people</span>
               <a href="postdeletion/{{post.id}}"><p class="delete">Delete</</p></a>
             </div>
-            
-              
-            
+
             <div class="comments">
               <div>
                 <div class="profile-img miniPI">
@@ -183,22 +179,17 @@
               <div class="commentbody" >
                 {{comment.body}}
               </div>
-
             </div>
 
             {% endfor %}
-
-
-            
               <h1 id="comment{{post.id}}"></h1>
-
-              <div id="#comments-container"></div>
             {% endfor %}
           </div>
          </div>
         </div>
       </section>
     </section>
+
     <script>
       $('.like-button').click(function() {
         var postId= $(this).attr("data-post-id");
@@ -249,5 +240,6 @@
         });
       });
     </script>
+
   </body>
 </html>

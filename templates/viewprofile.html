@@ -32,12 +32,11 @@
               </div>
               {% if request.user in output.userprofile.followedby.all %}
               <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="unfollow" > Unfollow </button>
-              {% else %}
+               {% else %}
               <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="follow" > Follow </button>
-              {% endif %}
+               {% endif %}
               {% else %}
-              {% if request.user in output.userprofile.friendnames.all %}
-              {% else %}
+              {% if output.userprofile not in request.user.friendinlist.all %}
               <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="text-button">Send request</button>
               {% endif %}
               {% endif %}
@@ -65,10 +64,7 @@
               <li>Name :{{output.userprofile.user}}</li>
               <li>Bio :{{output.userprofile.bio}}</li>
               <li>Location :{{output.userprofile.location}}</li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <br />
+              
               <br />
             </ul>
           </div>
@@ -105,7 +101,7 @@
 
             <div class="instant-post">
               <div class="profile-img">
-                <img src="" />
+                <img src="{{request.user.profile.profileimg.url}}" />
               </div>
               <div>
                 <textarea placeholder="What's on your mind?"></textarea>
@@ -138,37 +134,47 @@
               <img src="{{post.image.url}}" />
             </div>
             <div class="like-and-comment">
-              
               {% if request.user in post.liked.all %}
               <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}" style="color: rgb(8, 33, 220);">Like</button>
               {% else %}
               <button class="like-button" id="{{post.id}}{{output.userprofile.ids}}" data-post-id="{{post.id}}" data-userprofile-id="{{output.userprofile.ids}}" style="color: rgb(0, 0, 0)">Like</button>
               {% endif %}
-              
               <button>Comment</button>
-             
-              </div></button>
-              <br>
+              <button>Share</button>
               <span id="like-count-{{ post.id }}">liked by {{ post.no_of_likes }} people</span>
+              <a href="postdeletion/{{post.id}}"><p class="delete">Delete</</p></a>
             </div>
+
             <div class="comments">
               <div>
                 <div class="profile-img miniPI">
-                  <img src="{{output.userprofile.profileimg.url}}" />
+                  <img src="{{request.user.profile.profileimg.url}}" />
                 </div>
               </div>
               <div class="comment-div">
                 <form class="comment-form" postid="{{post.id}}">
                   {% csrf_token %}
                   <textarea class="comment-text{{post.id}}"></textarea>
-                 <button type="submit">Comment</button>
                  </form>
               </div>
+            </div>
+
+            {% for comment in post.comments.all %}
+            <div class="allcomments">
+              <div class="commenterimage">
+                <img src="{{comment.commentedby.profileimg.url}}" width="50px" height="40px" />
               </div>
-              {% for comment in post.comments.all %}
-                <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{comment.body}} - {{comment.name}}</h1>
-                <br>
-              {% endfor %}
+              <div class="commentername">
+                <span>{{comment.name}}</span>
+              </div>
+              <div>
+              </div>
+              <div class="commentbody" >
+                {{comment.body}}
+              </div>
+            </div>
+
+            {% endfor %}
               <h1 id="comment{{post.id}}"></h1>
             {% endfor %}
           </div>
@@ -224,7 +230,8 @@
       });  
 
       $(document).ready(function(){
-        $(".comment-form").submit(function(event){
+        $(".comment-form").on('keydown',function(event){
+          if (event.key === 'Enter') {
           var postid= $(this).attr("postid");
           var comment= $(".comment-text"+postid).val()
           console.log(postid,comment)
@@ -239,10 +246,11 @@
             },
             success: function(response){
               console.log(response.comment)
-              $("#comment"+postid).text(response.comment);
+              $("#comment"+postid).text(response.comment+response.name);
               $('.comment-text'+postid).val('');
             }
           });
+        }
         });
       });
 

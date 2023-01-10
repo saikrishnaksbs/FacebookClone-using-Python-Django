@@ -1,9 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
-
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static '/css/messageslist.css' %}">
+    <link rel="stylesheet" href="{% static '/css/allfriendslist.css' %}">
     <title>Friends List</title>
   </head>
   <body>
@@ -14,13 +13,12 @@
     <center><h3>Your Friends List</h3>  </center>
     {% for friend in Friend_list %}
     <div id="friends-list">
-      <div class="friend">
-        <!-- <img src="{{friend.profile.profileimg.url}}" width="50px"/> -->
+      <div class="friend"> 
         <div class="name">{{friend.friends}}</div>
         <div class="friendbuttons{{friend.friends}}">
         <button class="friendbutton" friendname="{{friend.friends}}" friendid="{{friend.profile.ids}}">Remove Friend</button>
-      </div>
-      </div>
+        </div>
+    </div>
     </div>
     {% endfor %}
 <script>

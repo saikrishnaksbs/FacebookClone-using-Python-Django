@@ -165,14 +165,15 @@ def postuploading(request):
         user = request.user.username
         image = request.FILES.get('image')
         caption = request.POST['caption']
-        profile_of_postedperson=Profile.objects.get(ids=request.user.id)
+        profile_of_postedperson = Profile.objects.get(ids=request.user.id)
         if not image:
-            new_post = Post.objects.create(user=user, caption=caption,postedby=profile_of_postedperson)
+            new_post = Post.objects.create(
+                user=user, caption=caption, postedby=profile_of_postedperson)
             new_post.save()
             return redirect('profile')
         else:
             new_post = Post.objects.create(postedby=profile_of_postedperson,
-                user=user, image=image, caption=caption)
+                                           user=user, image=image, caption=caption)
             new_post.save()
             return redirect('profile')
 
@@ -206,6 +207,9 @@ def search(request):
         allfriends.append(friend['friends'])
     profileimages = Profile.objects.filter(user__username__in=allfriends)
     print(profileimages)
+
+    requesteduserprofile = Profile.objects.filter(ids=requested_userid)
+    print(requesteduserprofile)
 
     if searched_name.count() == 0:
         return HttpResponse(searched_details+" does not exist")
@@ -291,10 +295,11 @@ def postComment(request):
         comment = request.POST.get('comment')
         post = Post.objects.get(id=id)
         name = request.user.username
-        profile_of_commenter=Profile.objects.get(ids=request.user.id)
+        profile_of_commenter = Profile.objects.get(ids=request.user.id)
         body = comment
         print(body, comment, id)
-        comments = Comment.objects.create(post=post,commentedby=profile_of_commenter, name=name, body=body)
+        comments = Comment.objects.create(
+            post=post, commentedby=profile_of_commenter, name=name, body=body)
         name = request.user.username
         body = comment
         comments.save()
@@ -436,24 +441,26 @@ def removefriend(request):
         friendname = request.POST.get('friendname')
         friendid = request.POST.get('friendid')
         adminname = request.user.username
+        adminid = request.user.id
+        print(friendid, friendname, adminname, adminid)
 
         adminobject = Profile.objects.get(user__username=adminname)
-        friendobjeject = Profile.objects.get(ids=friendid)
+        friendobjeject = Profile.objects.get(user__username=friendname)
         print(friendobjeject, adminobject)
 
         adminlist = Friends.objects.filter(name=friendname, friends=adminname)
         friendlist = Friends.objects.filter(name=adminname, friends=friendname)
         print(adminlist, friendlist)
 
-        adminlist.delete()
-        friendlist.delete()
-
-        senduser = User.objects.get(id=friendid)
+        print(friendid, friendname)
+        senduser = User.objects.get(username=friendname)
         friendobjeject.friendnames.remove(request.user)
         adminobject.friendnames.remove(senduser)
 
         friendobjeject.save()
         adminobject.save()
+        adminlist.delete()
+        friendlist.delete()
 
         message = "Friend Deleted"
         return JsonResponse({'message': message})
@@ -554,22 +561,21 @@ def follow(request):
 
         searchedbyid_object = Profile.objects.get(ids=searchedbyid)
         searchedid_object = Profile.objects.get(ids=searchedid)
-        
+
         searchedbyid_user_object = User.objects.get(id=searchedbyid)
         searchedid_user_object = User.objects.get(id=searchedid)
-        
-        
-        
+
         searchedbyid_object.following.add(searchedid_user_object)
         searchedid_object.followedby.add(searchedbyid_user_object)
-        searchedid_object.no_of_followers=searchedid_object.no_of_followers+1
+        searchedid_object.no_of_followers = searchedid_object.no_of_followers+1
         searchedid_object.save()
         searchedid_object.save()
         followers_count = searchedid_object.no_of_followers
         return JsonResponse({'followers_count': followers_count})
 
+
 def unfollow(request):
-    
+
     if request.method == 'POST':
 
         searchedbyid = request.POST.get('searchedbyid')
@@ -578,14 +584,14 @@ def unfollow(request):
 
         searchedbyid_object = Profile.objects.get(ids=searchedbyid)
         searchedid_object = Profile.objects.get(ids=searchedid)
-        
+
         searchedbyid_user_object = User.objects.get(id=searchedbyid)
         searchedid_user_object = User.objects.get(id=searchedid)
-        
+
         searchedbyid_object.following.remove(searchedid_user_object)
         searchedid_object.followedby.remove(searchedbyid_user_object)
-        
-        searchedid_object.no_of_followers=searchedid_object.no_of_followers-1
+
+        searchedid_object.no_of_followers = searchedid_object.no_of_followers-1
         searchedid_object.save()
         searchedid_object.save()
         followers_count = searchedid_object.no_of_followers
