@@ -348,6 +348,11 @@ body {
     grid-column-gap: 5px;
 }
 
+.allcommnts{
+    height: 5rem;
+    overflow-y: scroll;
+}
+
 .post-name-info {
     position: relative;
 }

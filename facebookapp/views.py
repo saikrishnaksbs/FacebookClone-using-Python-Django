@@ -99,7 +99,6 @@ def settings(request):
             image = user_profile.profileimg
             bio = request.POST['bio']
             location = request.POST['location']
-
             user_profile.profileimg = image
             user_profile.bio = bio
             user_profile.location = location
@@ -591,8 +590,8 @@ def unfollow(request):
 
         searchedbyid_object.following.remove(searchedid_user_object)
         searchedid_object.followedby.remove(searchedbyid_user_object)
-
         searchedid_object.no_of_followers = searchedid_object.no_of_followers-1
+        
         searchedid_object.save()
         searchedid_object.save()
         followers_count = searchedid_object.no_of_followers

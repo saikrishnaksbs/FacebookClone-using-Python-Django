@@ -5,23 +5,18 @@
     text-align: center;
 }
 
-.friend-list {
-    text-align: left;
-    display: flex;
-}
 
 .friend {
-    display: flex;
-
+    display: grid;
     text-align: left;
-    padding: 10px;
+    padding: 5px;
     border-bottom: 1px solid #ccc;
     column-gap: 20px;
-    width: 40%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+    grid-template-columns: 2fr 1fr;
 }
-
 
 .friend button {
     padding: 5px;
@@ -31,6 +26,7 @@
 
 .name {
     font-size: 25px;
+    padding-left: 10px;
 }
 
 .images {
