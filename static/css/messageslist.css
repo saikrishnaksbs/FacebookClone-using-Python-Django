@@ -1,7 +1,7 @@
 .header {
     background-color: #3b5998;
     color: white;
-    padding: 15px;
+    padding: 0.938rem;
     text-align: center;
 }
 
@@ -9,9 +9,9 @@
 .friend {
     display: grid;
     text-align: left;
-    padding: 5px;
+    padding: 0.313rem;
     border-bottom: 1px solid #ccc;
-    column-gap: 20px;
+    column-gap: 1.25rem;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -19,17 +19,17 @@
 }
 
 .friend button {
-    padding: 5px;
+    padding: 0.313rem;
     background-color: #3b5998;
     color: aliceblue;
 }
 
 .name {
-    font-size: 25px;
-    padding-left: 10px;
+    font-size: 1.563;
+    padding-left: 0.625rem;
 }
 
 .images {
-    height: 50px;
-    width: 50px;
+    height: 3.125rem;
+    width: 3.125rem;
 }

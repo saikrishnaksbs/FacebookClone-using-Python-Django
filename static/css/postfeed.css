@@ -41,14 +41,17 @@ body {
     background-color: #ffffff;
 
 }
-.userprofilepic{
+
+.userprofilepic {
     border-radius: 100rem;
 }
-.loggedout{
+
+.loggedout {
     position: relative;
     top: -6.8em;
-    left:25rem;
+    left: 25rem;
 }
+
 .search-navbar a {
     color: #000000;
     text-decoration: none;
@@ -169,7 +172,7 @@ body {
     border-radius: 0.5rem;
     width: 9.375rem;
     position: relative;
-top: -4rem;
+    top: -4rem;
 }
 
 .edit {
@@ -181,7 +184,7 @@ top: -4rem;
     width: 9.375rem;
     font-family: Arial, sans-serif;
     position: relative;
-top: -4rem;
+    top: -4rem;
 }
 
 .navbar {
@@ -789,13 +792,14 @@ top: -4rem;
         left: 380px;
     }
 
-   .profilepic h3 {
+    .profilepic h3 {
 
         position: absolute;
         top: 45.6rem;
         font-size: 1.8rem;
         left: 24rem;
-    } 
+    }
+
     .story {
         padding: 0.625rem;
         font-size: 0.938rem;
@@ -804,115 +808,128 @@ top: -4rem;
         border-radius: 0.5rem;
         width: 15.375rem;
         left: 20rem;
-      }
-      .edit {
+    }
+
+    .edit {
         padding: 0.625rem;
         font-size: 0.938rem;
         border: 0.063rem solid #3332;
-       font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif;
         font-family: inherit;
         border-radius: 0.5rem;
         width: 15.375rem;
         left: 20rem;
 
-        
-      }
-      .navbar ul li {
 
-    display: inline-block;
-    padding: 0.875rem 2.938rem;
-    font-size: 1rem;
-    color: #9b8a8a;
-    font-weight: 600;
+    }
 
-}
-.all-information {
+    .navbar ul li {
 
-    width: 100%;
-    display: grid;
-    
-	margin-bottom: 15px;
+        display: inline-block;
+        padding: 0.875rem 2.938rem;
+        font-size: 1rem;
+        color: #9b8a8a;
+        font-weight: 600;
 
-    grid-template-columns: 3fr 5fr;
-    grid-column-gap: 0rem;
+    }
 
-}
-.bio-photos-friends {
+    .all-information {
 
-    width: 100%;
-  margin-left: 6rem;
-  margin-top: -0rem;
-}
-.all-information {
+        width: 100%;
+        display: grid;
 
-    width: 100%;
-    display: grid;
-    margin-bottom: 15px;
-    grid-template-columns: 3fr 5fr;
-    grid-column-gap: 0rem;
+        margin-bottom: 15px;
 
-}
-.like-and-comment {
+        grid-template-columns: 3fr 5fr;
+        grid-column-gap: 0rem;
 
-    padding: 0.938rem 0.938rem;
-    display: flex;
+    }
 
-    flex-wrap: wrap;
+    .bio-photos-friends {
 
-}
-.like-and-comment button {
-    padding-left: 0rem;
-    border-radius: 0.313rem;
-    border: 0.625rem;
-    outline: none;
-    font-size: 1.125rem;
-    color: #333;
-    background-color: #fff0;
-  }
-  
-  .all-posts {
-    width: 150%;
-    margin-left: 13rem;
-}
-.bio-photos-friends {
-    width: 99%;
-    margin-top: 0rem;
-    margin-left: 0rem;
-}
-.images-photos img {
+        width: 100%;
+        margin-left: 6rem;
+        margin-top: -0rem;
+    }
 
-    width: 8rem;
-    height: 8rem;
+    .all-information {
 
-}
-.images-friends img {
-    width: 8rem;
-    height: 8rem;
-    background-color: #ffffff;
-  }
-.like-and-comment {
+        width: 100%;
+        display: grid;
+        margin-bottom: 15px;
+        grid-template-columns: 3fr 5fr;
+        grid-column-gap: 0rem;
 
-    padding: 0.938rem 0.938rem;
-    display: flex;
-    flex-wrap: wrap;
-column-gap: 7.438rem;
-}
-.comments {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 11fr;
-    grid-column-gap: 0.313rem;
-    margin-top: 1.625rem;
-  }
-  .features span {
-    font-size: 1.338rem;
-    color: #333;
-    font-weight: 600;
-    margin-top: 0.938rem;
-    padding-top: 0.938rem;
-    position: relative;
-    top: 2rem;
-    left: -30rem;
-    border-bottom: ;
-  }
+    }
+
+    .like-and-comment {
+
+        padding: 0.938rem 0.938rem;
+        display: flex;
+
+        flex-wrap: wrap;
+
+    }
+
+    .like-and-comment button {
+        padding-left: 0rem;
+        border-radius: 0.313rem;
+        border: 0.625rem;
+        outline: none;
+        font-size: 1.125rem;
+        color: #333;
+        background-color: #fff0;
+    }
+
+    .all-posts {
+        width: 150%;
+        margin-left: 13rem;
+    }
+
+    .bio-photos-friends {
+        width: 99%;
+        margin-top: 0rem;
+        margin-left: 0rem;
+    }
+
+    .images-photos img {
+
+        width: 8rem;
+        height: 8rem;
+
+    }
+
+    .images-friends img {
+        width: 8rem;
+        height: 8rem;
+        background-color: #ffffff;
+    }
+
+    .like-and-comment {
+
+        padding: 0.938rem 0.938rem;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 7.438rem;
+    }
+
+    .comments {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 11fr;
+        grid-column-gap: 0.313rem;
+        margin-top: 1.625rem;
+    }
+
+    .features span {
+        font-size: 1.338rem;
+        color: #333;
+        font-weight: 600;
+        margin-top: 0.938rem;
+        padding-top: 0.938rem;
+        position: relative;
+        top: 2rem;
+        left: -30rem;
+
+    }
 }
