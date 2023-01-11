@@ -20,8 +20,10 @@ class Profile(models.Model):
     verified = models.IntegerField(default=0)
     friendnames = models.ManyToManyField(
         User, related_name='friendinlist', blank=True)
-    following=models.ManyToManyField(User,related_name='followinglist', blank=True)
-    followedby=models.ManyToManyField(User,related_name='followerslist', blank=True)
+    following = models.ManyToManyField(
+        User, related_name='followinglist', blank=True)
+    followedby = models.ManyToManyField(
+        User, related_name='followerslist', blank=True)
 
     def __str__(self):
         return self.user.username
@@ -30,7 +32,7 @@ class Profile(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.CharField(max_length=100)
-    
+
     image = models.ImageField(upload_to='image_posts', blank=True)
     caption = models.TextField(blank=True)
     created_ad = models.DateTimeField(default=datetime.now)

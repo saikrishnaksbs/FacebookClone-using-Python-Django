@@ -15,32 +15,45 @@
       <h1>Facebook</h1>
     </div>
 
+    
     <div class="search-navbar">
-      <a href="/postfeed">Home</a>
-      <a href="#">Profile</a>
-      <a href="/messagelist/{{output.userprofile.ids}}">Messages</a>
-      <a href="/friendrequests">Friend Requests</a>
-      <a href="/logout">logout</a>
-      <a href="/settings">settings</a>
-
-      <form action="{% url 'search' %}" method="get" class="search-container">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Enter Name">
-        <button type="submit">Search</button>
-      </form>
+    <img src="static/images/fbicon.jpg" width="60px" height="60px">
+    <img src="static/images/search.png" width="40px" height="40px">
+     <form action="{% url 'search' %}" method="get" class="search-container">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="Enter Name">
+      <button type="submit"></button>
+    </form>
+      <a href="/postfeed"><img src="static/images/home.jpg" width="50px" height="30px"></a>
+      <a href="/messagelist/{{output.userprofile.ids}}"><img src="static/images/messenger.png" width="40px" height="20px" ></a>
+      <a href="/friendrequests"><img src="static/images/frequests.png" width="40px" height="20px" ></a>
+      <img class="userprofilepic" src="{{output.userprofile.profileimg.url}}" width="50px" height="30px"/>
     </div>
+    <!-- <a class="loggedout" href="/logout"><img src="static/images/logout.png" width="30px" height="30px"></a> -->
+
+
 
     <section class="cover_profile_pics">
+      
       <header class="images">
         <section class="coverphoto">
           <img src="i.jpg" />
+        </section>
+
           <div class="profilepic">
            <img src="{{output.userprofile.profileimg.url}}" />
               <h1 class="profilename">
                 {{output.name}} <span></span>
               </h1>
+              <h3>{{request.user.profile.no_of_friends}} friends</h3>
+
+            <div class="story_editprofile">
+              
+              <a href="/postuploading"><button class="story">Add to story</button></a>
+                <a href="/settings"><button class="edit">Edit Profile</button></a>
             </div>
-        </section>
+            </div>
+        
 
         <nav class="navbar">
           <ul>
@@ -57,11 +70,10 @@
         <div class="bio-photos-friends">
           <div class="features">
             <span>Intro</span>
-
             <ul>
-              <li>Name :{{output.userprofile.user}}</li>
-              <li>Bio :{{output.userprofile.bio}}</li>
-              <li>Location :{{output.userprofile.location}}</li>
+              <li><b>Name</b>  :{{output.userprofile.user}}</li>
+              <li><b>Bio</b> :{{output.userprofile.bio}}</li>
+              <li><b>Location</b> :{{output.userprofile.location}}</li>
             
             </ul>
           </div>
@@ -255,8 +267,6 @@
         }
         });
       });
-
     </script>
-
   </body>
 </html>

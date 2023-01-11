@@ -382,7 +382,10 @@ def acceptrequest(request):
             senduser = User.objects.get(id=friendid)
             sender_friend_object.friendnames.add(request.user)
             accepted_friend_object.friendnames.add(senduser)
-
+            sender_friend_object.no_of_friends=sender_friend_object.no_of_friends+1
+            accepted_friend_object.no_of_friends=accepted_friend_object.no_of_friends+1
+            
+            
             sender_friend_object.save()
             accepted_friend_object.save()
 
@@ -456,6 +459,9 @@ def removefriend(request):
         senduser = User.objects.get(username=friendname)
         friendobjeject.friendnames.remove(request.user)
         adminobject.friendnames.remove(senduser)
+        
+        friendobjeject.no_of_friends=friendobjeject.no_of_friends-1
+        adminobject.no_of_friends=adminobject.no_of_friends-1
 
         friendobjeject.save()
         adminobject.save()
@@ -564,14 +570,21 @@ def follow(request):
 
         searchedbyid_user_object = User.objects.get(id=searchedbyid)
         searchedid_user_object = User.objects.get(id=searchedid)
-
-        searchedbyid_object.following.add(searchedid_user_object)
-        searchedid_object.followedby.add(searchedbyid_user_object)
-        searchedid_object.no_of_followers = searchedid_object.no_of_followers+1
-        searchedid_object.save()
-        searchedid_object.save()
-        followers_count = searchedid_object.no_of_followers
-        return JsonResponse({'followers_count': followers_count})
+        
+        if searchedbyid_user_object not in searchedid_object.followedby.all():
+            print("not in ------ follow")
+            searchedbyid_object.following.add(searchedid_user_object)
+            searchedid_object.followedby.add(searchedbyid_user_object)
+            searchedid_object.no_of_followers = searchedid_object.no_of_followers+1
+            searchedid_object.save()
+            searchedid_object.save()
+            followers_count = searchedid_object.no_of_followers
+            return JsonResponse({'followers_count': followers_count,'msg':'Unfollow'})
+        
+        else:
+            print("yes it is in ---------follow")        
+            followers_count = searchedid_object.no_of_followers
+            return JsonResponse({'followers_count': followers_count,'msg':'Unfollow'})
 
 
 def unfollow(request):
@@ -587,12 +600,19 @@ def unfollow(request):
 
         searchedbyid_user_object = User.objects.get(id=searchedbyid)
         searchedid_user_object = User.objects.get(id=searchedid)
-
-        searchedbyid_object.following.remove(searchedid_user_object)
-        searchedid_object.followedby.remove(searchedbyid_user_object)
-        searchedid_object.no_of_followers = searchedid_object.no_of_followers-1
         
-        searchedid_object.save()
-        searchedid_object.save()
-        followers_count = searchedid_object.no_of_followers
-        return JsonResponse({'followers_count': followers_count})
+        if searchedbyid_user_object in searchedid_object.followedby.all():
+            print("not in ----------unfollow")
+            searchedbyid_object.following.remove(searchedid_user_object)
+            searchedid_object.followedby.remove(searchedbyid_user_object)
+            searchedid_object.no_of_followers = searchedid_object.no_of_followers-1
+            
+            searchedid_object.save()
+            searchedid_object.save()
+            followers_count = searchedid_object.no_of_followers
+            return JsonResponse({'followers_count': followers_count,'msg':'Follow'})
+        
+        else:
+            print("yes it is in ------unfollow")
+            followers_count = searchedid_object.no_of_followers
+            return JsonResponse({'followers_count': followers_count,'msg':'Follow'})

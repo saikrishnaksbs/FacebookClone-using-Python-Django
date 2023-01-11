@@ -65,10 +65,10 @@
                 var meessagedetails =
                   "<b>" +
                   response.chats[chat].sendersname +
-                  "</b><p>" +
+                  "</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp " +
+                    response.chats[chat].created+ "<p>"+
                   response.chats[chat].message +
-                  "</p>" +
-                  response.chats[chat].created +
+                  "</p>"+
                   "<br><br>";
                 $("#display").append(meessagedetails);
               }

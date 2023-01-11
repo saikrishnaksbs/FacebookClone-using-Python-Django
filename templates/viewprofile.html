@@ -15,34 +15,53 @@
     <div class="header">
       <h1>Facebook</h1>
     </div>
+    
+
+
     <section class="cover_profile_pics">
       <header class="images">
         <section class="coverphoto">
           <img src="i.jpg" />
-          <section class="coverpic">
-            <div class="profilepic">
+        </section>
+          <div class="profilepic">
            <img src="{{output.userprofile.profileimg.url}}" />
               <h1 class="profilename">
                 {{output.name}} <span></span>
               </h1>
+  
+
+           
               {% if output.userprofile.verified %}
-              <div class="verified" >
-              <img src="static/images/fa0f941d7406f2698ca190b3e88e4ae7.png"  width="1" 
-              height="1"  />
+              <div class="verified"> 
+                <img  src="static/images/fa0f941d7406f2698ca190b3e88e4ae7.png" />
               </div>
-              {% if request.user in output.userprofile.followedby.all %}
-              <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="unfollow" > Unfollow </button>
-               {% else %}
-              <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="follow" > Follow </button>
-               {% endif %}
-              {% else %}
-              {% if output.userprofile not in request.user.friendinlist.all %}
-              <button searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="text-button">Send request</button>
-              {% endif %}
-              {% endif %}
+              <h4 id="followers">{{output.userprofile.no_of_followers}} Followers</h4>
+                {% if request.user in output.userprofile.followedby.all %}
+                <button class="unfollows" searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="unfollow" > Unfollow </button>
+                 {% else %}
+                 
+                <button class="follows" searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="follow" > Follow </button>
+                 {% endif %}
+
+                 {% else %}
+                 
+                 <h4>{{output.userprofile.no_of_friends}} Friends</h4>
+
+                 {% if output.userprofile not in request.user.friendinlist.all %}
+                 <button class="sendreq" searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="text-button">Send request</button>
+
+                 {% else %}
+                 <!-- <button class="sendreq" searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="text-button">Send request</button> -->
+
+                 {% endif %}
+                 {% endif %}
+               
+<!-- 
+              <a href="/postuploading"><button class="story">Add to story</button></a>
+                <a href="/settings"><button class="edit">Edit Profile</button></a> -->
+            </div>
             </div>
           </section>
-        </section>
 
         <nav class="navbar">
           <ul>
@@ -73,7 +92,9 @@
             <span>Photos</span>
             <div class="images-photos">
               {% for post in posts %}
-              <img src="{{post.image.url}}" />
+              {% if post.image %}
+                <img src="{{post.image.url}}" />
+              {% endif %}
               {% endfor %}
             </div>
           </div>
@@ -131,7 +152,9 @@
             </div>
             <div class="post-img-txt">
               <p>{{post.caption}}</p>
+              {% if post.image %}
               <img src="{{post.image.url}}" />
+            {% endif %}
             </div>
             <div class="like-and-comment">
               {% if request.user in post.liked.all %}
@@ -158,7 +181,7 @@
                  </form>
               </div>
             </div>
-            
+      
             <div class="allcommnts">
             <div class="cmmts{{post.id}}">
             {% for comment in post.comments.all %}
@@ -205,7 +228,6 @@
             } else {
               button.css('color', 'rgb(0, 0, 0)');
             }
-            
           }
         });
       });
@@ -282,7 +304,8 @@
             data: {'searchedbyid': searchedbyid, 'searchedid':searchedid,'searchedname':searchedname, csrfmiddlewaretoken: '{{ csrf_token }}'},
             dataType: 'json',
             success: function(response) {
-                $('#follow').text('Unfollow');
+                $('#follow').text(response.msg);
+                $('#followers').text(response.followers_count+" Followers");
             }
           });
         });
@@ -301,7 +324,9 @@
             data: {'searchedbyid': searchedbyid, 'searchedid':searchedid,'searchedname':searchedname, csrfmiddlewaretoken: '{{ csrf_token }}'},
             dataType: 'json',
             success: function(response) {
-                $('#unfollow').text('Follow');
+                $('#unfollow').text(response.msg);
+                $('#followers').text(response.followers_count+" Followers");
+                
             }
           });
         });
