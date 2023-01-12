@@ -14,12 +14,14 @@ body {
     padding: 0.938rem;
     text-align: center;
 }
+
 .bio-photos-friends {
     width: 95%;
     margin: auto;
-    margin-top:-20px ;
+    margin-top: -20px;
 
 }
+
 .header h1 {
     margin: 0;
     font-size: 1.5rem;
@@ -46,9 +48,11 @@ body {
     background-color: #ffffff;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
+
 #search-form {
     display: none;
-  }
+}
+
 .userprofilepic {
     border-radius: 100rem;
 }
@@ -75,7 +79,7 @@ body {
     padding: 0.5rem;
     width: 5.25rem;
     border-radius: 0.188rem 0 0 0.188rem;
-    
+
 }
 
 .search-navbar button {
@@ -235,11 +239,12 @@ body {
     border-radius: 0.938rem;
     margin-top: 0.625rem;
     box-shadow: 0rem 0rem 0.125rem rgba(233, 10, 10, 0.333);
-    
+
 }
-.all-posts{
+
+.all-posts {
     width: 95%;
-margin: auto;
+    margin: auto;
 }
 
 .features span {
@@ -278,15 +283,15 @@ margin: auto;
     color: rgb(16, 35, 207);
 }
 
-.coverpics{
+.coverpics {
     width: 20px;
     height: 20px;
     padding-left: 5px;
     background-color: white;
     padding-bottom: 5px;
     position: relative;
-top: -500px;
-left: 400px;
+    top: -500px;
+    left: 400px;
 }
 
 .images-photos {
@@ -330,7 +335,7 @@ left: 400px;
 
 .status-bar {
     border-bottom: 0.063rem solid #3332;
-    
+
 }
 
 .status-bar ul {
@@ -421,7 +426,7 @@ left: 400px;
 .post-name-info {
     position: relative;
     top: 1.45rem;
-left: .7rem;
+    left: .7rem;
 }
 
 .post-name-info h2 {
@@ -429,7 +434,7 @@ left: .7rem;
     color: #333;
     font-weight: 600;
     margin-top: 0.438rem;
-    padding-top:5px;
+    padding-top: 5px;
 
 }
 
@@ -550,7 +555,7 @@ left: .7rem;
 
     box-sizing: border-box;
     border-radius: 6.25rem;
-   
+
     resize: none;
     margin-top: 1.25rem;
 }
@@ -616,17 +621,23 @@ left: .7rem;
     overflow-y: scroll;
     height: 5rem;
 }
+
 .icon {
-    display: inline-block; /* display the icon as an inline block element */
-    width: 30px; /* set the width of the icon */
-    height: 30px; /* set the height of the icon */
-    background: url(static/images/SeekPng.com_facebook-icon-white-png_1537093.png); /* set the background image of the icon */
-    background-size: cover; /* scale the background image to cover the entire element */
-  }
+    display: inline-block;
+    /* display the icon as an inline block element */
+    width: 30px;
+    /* set the width of the icon */
+    height: 30px;
+    /* set the height of the icon */
+    background: url(static/images/SeekPng.com_facebook-icon-white-png_1537093.png);
+    /* set the background image of the icon */
+    background-size: cover;
+    /* scale the background image to cover the entire element */
+}
 
 
 
-@media screen and (min-width: 453px) and (max-width:1199px){
+@media screen and (min-width: 453px) and (max-width:1199px) {
 
     .loggedout {
         display: block;
@@ -779,6 +790,7 @@ left: .7rem;
         font-size: 1.2rem;
 
     }
+
     .coverpics {
         width: 20px;
         height: 20px;
@@ -788,8 +800,8 @@ left: .7rem;
         position: relative;
         top: -650px;
         left: 750px;
-      }
-      
+    }
+
 
     .bio-photos-friends {
         width: 70%;
@@ -804,7 +816,7 @@ left: .7rem;
     .post-name-info h2 {
 
         font-size: 1.25rem;
-        padding-top:5px;
+        padding-top: 5px;
 
     }
 
@@ -832,6 +844,7 @@ left: .7rem;
         width: 9.25rem;
         border-radius: 0.188rem 0 0 0.188rem;
     }
+
     .search-navbar {
         display: grid;
         flex-wrap: no-wrap;
@@ -840,7 +853,7 @@ left: .7rem;
         column-gap: 3.9rem;
         background-color: #ffffff;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      }
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -921,6 +934,7 @@ left: .7rem;
         grid-column-gap: 0rem;
 
     }
+
     .search-navbar {
         display: grid;
         align-items: center;
@@ -928,7 +942,7 @@ left: .7rem;
         column-gap: 5.5rem;
         background-color: #ffffff;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      }
+    }
 
     .coverpics {
         width: 30px;
@@ -939,8 +953,8 @@ left: .7rem;
         position: relative;
         top: -450px;
         left: 1050px;
-      }
- 
+    }
+
     .bio-photos-friends {
 
         width: 98%;
@@ -981,15 +995,15 @@ left: .7rem;
 
         width: 95%;
         margin: auto;
-        height: 1400px;
+        height: 70rem;
         overflow-y: scroll;
-      
+
     }
 
     .header h1 {
         margin: 0;
         font-size: 2.5rem;
-      }
+    }
 
     .images-photos img {
 
@@ -1019,6 +1033,6 @@ left: .7rem;
         width: 20.25rem;
         border-radius: 0.188rem 0 0 0.188rem;
     }
-    
-    
+
+
 }
