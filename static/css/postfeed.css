@@ -217,7 +217,8 @@ body {
     display: grid;
     grid-template-columns: 5fr;
     grid-column-gap: 0.938rem;
-
+    width: 95%;
+    margin: auto;
 }
 
 
@@ -410,6 +411,8 @@ body {
     color: #333;
     font-weight: 600;
     margin-top: 0.438rem;
+    padding-top:5px;
+
 }
 
 .post-name-info .date-public span {
@@ -532,7 +535,7 @@ body {
 
     box-sizing: border-box;
     border-radius: 6.25rem;
-    padding-top: 1.563rem;
+    
     resize: none;
     margin-top: 1.25rem;
 }
@@ -745,6 +748,7 @@ body {
     .post-name-info h2 {
 
         font-size: 1.25rem;
+        padding-top:5px;
 
     }
 
@@ -923,13 +927,10 @@ body {
 
     .features span {
         font-size: 1.338rem;
-        color: #333;
-        font-weight: 600;
-        margin-top: 0.938rem;
-        padding-top: 0.938rem;
-        position: relative;
-        top: 2rem;
-        left: -30rem;
+color: #333;
+font-weight: 600;
+margin-top: 0.938rem;
+padding-top: 0.938rem;
 
     }
 }

@@ -201,9 +201,9 @@
             {% endfor %}
           </div>
               <h1 id="comment{{post.id}}"></h1>
-            {% endfor %}
+            </div>
           </div>
-         </div>
+          {% endfor %}
         </div>
         </div>
       </section>
@@ -310,8 +310,7 @@
           });
         });
       });  
-
-
+      
       $(document).ready(function() {
         $('#unfollow').click(function() {
           var searchedbyid=$(this).attr("searchedby-id"); 
@@ -331,6 +330,7 @@
           });
         });
       });  
+
 
     </script>
   </body>

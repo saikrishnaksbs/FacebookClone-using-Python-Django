@@ -13,12 +13,19 @@ body {
     padding: 0.938rem;
     text-align: center;
 }
+.bio-photos-friends {
+    width: 95%;
+    margin: auto;
 
+}
 .header h1 {
     margin: 0;
     font-size: 1.5rem;
 }
-
+.allcommnts {
+    overflow-y: scroll;
+    height: 5rem;
+}
 .header {
     background-color: #3b5998;
     color: white;
@@ -75,7 +82,10 @@ body {
     border-radius: 0 0.188rem 0.188rem 0;
     display: none;
 }
-
+.all-posts {
+    width: 95%;
+    margin: auto;
+}
 .search-navbar button:hover {
     background-color: #2d4373;
 }
@@ -260,6 +270,7 @@ body {
     border-radius: 0.313rem;
     margin-top: 0.625rem;
     box-shadow: 0rem 0rem 0.125rem rgba(233, 10, 10, 0.333);
+
 }
 
 
@@ -428,7 +439,6 @@ body {
     grid-column-gap: 0.313rem;
 }
 
-
 .post-name-info {
     position: relative;
 }
@@ -438,6 +448,7 @@ body {
     color: #333;
     font-weight: 600;
     margin-top: 0.438rem;
+    padding-top:5px;
 }
 
 .post-name-info .date-public span {
@@ -561,7 +572,7 @@ body {
 
     box-sizing: border-box;
     border-radius: 6.25rem;
-    padding-top: 1.563rem;
+    
     resize: none;
     margin-top: 1.25rem;
 }
@@ -763,6 +774,7 @@ body {
     .post-name-info h2 {
 
         font-size: 1.25rem;
+        padding-top:5px;
 
     }
 
@@ -983,7 +995,10 @@ body {
         top: -3.75rem;
 
     }
-
+    .allcommnts {
+        overflow-y: scroll;
+        height: 5rem;
+    }
     .verified img {
 
         height: 1.5rem;

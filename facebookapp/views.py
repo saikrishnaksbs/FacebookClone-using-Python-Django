@@ -121,6 +121,28 @@ def settings(request):
 
 @login_required
 @transaction.atomic
+def coverpic(request):
+    '''Gets the coverpic data'''
+    user_profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+
+        if request.FILES.get('image') == None:
+            image = user_profile.coverimg
+            user_profile.coverimg = image
+            user_profile.save()
+
+        if request.FILES.get('image') != None:
+
+            image = request.FILES.get('image')
+            user_profile.coverimg = image
+            user_profile.save()
+
+        return redirect('profile')
+    return render(request, 'coverpic.html')
+
+
+@login_required
+@transaction.atomic
 def profile(request):
     '''Directs to profile page of user'''
     username = User.objects.get(username=request.user.username)

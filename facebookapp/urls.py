@@ -28,4 +28,5 @@ urlpatterns = [
     path('postfeed', views.postfeed, name='postfeed'),
     path('follow', views.follow, name='follow'),
     path('unfollow', views.unfollow, name='unfollow'),
+    path('coverpic', views.coverpic, name='coverpic'),
 ]

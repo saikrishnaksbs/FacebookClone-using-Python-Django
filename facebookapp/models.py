@@ -14,6 +14,8 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(
         upload_to='profile_images', default='profile_images/blank-profile-picture.png')
+    coverimg = models.ImageField(
+        upload_to='profile_images', default='profile_images/coverimg.jpg', blank=True)
     location = models.CharField(max_length=100, blank=True)
     no_of_friends = models.IntegerField(default=0)
     no_of_followers = models.IntegerField(default=0)
