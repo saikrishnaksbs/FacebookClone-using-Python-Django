@@ -498,7 +498,7 @@ def removefriend(request):
 def messagelist(request, id):
     '''Here you can fine whom you can message'''
 
-    profile_details = Profile.objects.get(ids=id)
+    profile_details = Profile.objects.get(ids=request.user.id)
     Friend_list = Friends.objects.filter(profile=profile_details)
     return render(request, 'messageslist.html', {'Friend_list': Friend_list})
 

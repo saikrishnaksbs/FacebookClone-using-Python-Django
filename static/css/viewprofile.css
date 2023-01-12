@@ -157,7 +157,7 @@ body {
     position: relative;
     top: -5.625rem;
     left: 0px;
-
+    color: gray;
 }
 
 
@@ -663,7 +663,7 @@ body {
         position: relative;
         top: -5.625rem;
         font-size: 1.8rem;
-
+        color: gray;
     }
 
     .story {
@@ -988,7 +988,7 @@ body {
         position: absolute;
         top: 45.625rem;
         left: 23.5rem;
-
+        color: gray;
     }
 
     .sendreq {

@@ -161,6 +161,7 @@ body {
     position: relative;
     margin-top: 0%;
     top: -5.625rem;
+    color: gray;
 }
 
 .profilepic h1>span {
@@ -301,7 +302,7 @@ body {
     flex-wrap: wrap;
     margin-top: 0.938rem;
     padding-left: 0.938rem;
-    column-gap: 1.25rem;
+    column-gap: 0.5rem;
 }
 
 .images-photos img {
@@ -970,6 +971,7 @@ body {
         grid-template-columns: 3fr 5fr;
         grid-column-gap: 0rem;
 
+        margin-top: -2rem;
     }
 
     .like-and-comment {

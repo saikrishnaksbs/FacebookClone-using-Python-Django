@@ -30,7 +30,7 @@
      
       <a href="/messagelist/1"><img src="static/images/messenger.png" id="msg-icon" style="display: block;" width="30px" height="25px"></a>
       <a href="/friendrequests"><img src="static/images/frequests.png" id="friendrequest-icon" style="display: block;" height="30px"></a>
-      <img class="userprofilepic" src="/media/profile_images/IMG_20200103_115343_sonuwxj.jpg" id="profile-icon" style="display: block;" width="30px" height="30px">
+      <img class="userprofilepic" src="{{output.userprofile.profileimg.url}}" id="profile-icon" style="display: block;" width="30px" height="30px">
       <a class="loggedout" href="/logout"><img src="static/images/logout.png" width="25px" height="25px"></a>
     </div>
     <section class="cover_profile_pics">
@@ -226,7 +226,6 @@
             } else {
               button.css('color', 'rgb(0, 0, 0)');
             }
-            
           }
         });
       });

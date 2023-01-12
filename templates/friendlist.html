@@ -29,6 +29,41 @@
             </div>
         </div>    
     {% endfor %}
-
+    <script>
+        $('.acceptbutton').click(function() {
+            var friendid= $(this).attr("friendid");
+            var friendname= $(this).attr("friendname");
+            console.log(friendid)
+            $.ajax({
+              url: '/acceptrequest',
+              type: 'POST',
+              data: {'friendid': friendid,'friendname':friendname, csrfmiddlewaretoken: '{{ csrf_token }}'},
+              dataType: 'json',
+              success: function(response) {
+                console.log(response.message)
+                $('.accept'+friendid).text("");
+                $('#stmt'+friendid).text(response.message);
+              }
+            });
+          });
+    
+          $('.rejectbutton').click(function() {
+            var friendid= $(this).attr("friendid");
+            var friendname= $(this).attr("friendname");
+            console.log(friendid)
+            $.ajax({
+              url: '/rejectrequest',
+              type: 'POST',
+              data: {'friendid': friendid,'friendname':friendname, csrfmiddlewaretoken: '{{ csrf_token }}'},
+              dataType: 'json',
+              success: function(response) {
+                console.log(response.message)
+                $('.accept'+friendid).text("");
+                $('#stmt'+friendid).text(response.message);
+              }
+            });
+          });
+        </script>
+    
     </body>
 </html>

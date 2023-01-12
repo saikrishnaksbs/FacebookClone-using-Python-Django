@@ -179,10 +179,10 @@ a {
     }
 
     .login_content {
-      width: 43.75rem;
+      width: 30.75rem;
       display: flex;
       flex-direction: column;
-      margin-top: 3.125rem;
+      margin-top: 8.25rem;
     }
 
     .login_content .title {
@@ -194,4 +194,8 @@ a {
       border-radius: 0.938rem 0.938rem 0 0;
       background: #2b519a;
     }
+    .login_content form {
+  padding: 0.625rem .875rem 1.125rem .875rem;
+  margin-top: auto;
+}
   }

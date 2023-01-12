@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static '/css/messageslist.css' %}">
+    <link rel="stylesheet" href="{% static '/css/allfriendslist.css' %}">
     <title>Friends List</title>
   </head>
   <body>
@@ -11,7 +11,7 @@
     <div class="header">
         <h1>Facebook</h1>
     </div>
-    <center><h3>Your Friends List</h3>  </center>
+    <center><h3>Your Messages List</h3>  </center>
     {% for friend in Friend_list %}
     
       <div class="friend">
@@ -20,7 +20,7 @@
       <a href="/sendmessage/{{friend.friends}}"><button >Send message</button></a> 
       </div>
       </div>
-    
     {% endfor %}
+    
   </body>
 </html>
