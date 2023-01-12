@@ -90,9 +90,12 @@ $('.friendbutton').click(function() {
 
   $(document).ready(function () {
     setInterval(function () {
+      var friendsname = $("#friendsname").val();
+      console.log(friendsname)
+    console.log()
       $.ajax({
         type: "GET",
-        url: "/getmessage/{{friendname}}",
+        url: "/getmessage/"+friendsname,
         success: function (response) {
           console.log(response);
           $("#display").empty();
@@ -111,9 +114,6 @@ $('.friendbutton').click(function() {
       });
     }, 1000);
   });
-
-
-
  
   $(document).ready(function(){
     $(".comment-form").on('keydown',function(event){

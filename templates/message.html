@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static '/css/message.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <center><h3>{{friendname}}</h3></center>
@@ -23,59 +24,13 @@
           type="hidden"
           name="friendsname"
           id="friendsname"
-          value="{{friend.name}}"
+          value="{{friend.name}}" 
         />
         {% endfor %}
         <input type="text" name="message" id="message" />
         <input type="submit" value="Send" />
       </form>
     </div>
-    <script>
-      $(document).on("submit", "#post-form", function (e) {
-        e.preventDefault();
-        var username = $("#username").val();
-        var friendsname = $("#friendsname").val();
-        console.log(username, friendsname);
-
-        $.ajax({
-          type: "POST",
-          url: "/tomessage",
-          data: {
-            username: $("#username").val(),
-            friendsname: $("#friendsname").val(),
-            message: $("#message").val(),
-            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-          },
-          success: function (data) {
-            console.log(data.message);
-          },
-        });
-        document.getElementById("message").value = "";
-      });
-
-      $(document).ready(function () {
-        setInterval(function () {
-          $.ajax({
-            type: "GET",
-            url: "/getmessage/{{friendname}}",
-            success: function (response) {
-              console.log(response);
-              $("#display").empty();
-              for (var chat in response.chats) {
-                var meessagedetails =
-                  "<b>" +
-                  response.chats[chat].sendersname +
-                  "</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp " +
-                    response.chats[chat].created+ "<p>"+
-                  response.chats[chat].message +
-                  "</p>"+
-                  "<br><br>";
-                $("#display").append(meessagedetails);
-              }
-            },
-          });
-        }, 1000);
-      });
-    </script>
   </body>
+  <script src="{% static 'js/alljscode.js' %}"></script>
 </html>

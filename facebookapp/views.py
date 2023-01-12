@@ -546,7 +546,9 @@ def getmessage(request, friendname):
     '''Here you can view the messages'''
 
     if request.method == "GET":
+        print(friendname)
         sender = Profile.objects.get(ids=request.user.id)
+
         receiver = Profile.objects.get(user__username=friendname)
 
         allmessages = Chat.objects.filter(
