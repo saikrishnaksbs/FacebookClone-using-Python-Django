@@ -29,24 +29,27 @@
     font-size: 1.25rem;
     text-align: left;
 }
-@media screen and  (min-width: 25.063rem) {
+
+@media screen and (min-width: 25.063rem) {
     .friend {
         display: grid;
         column-gap: .75rem;
         grid-template-columns: 2fr 1fr 1fr;
     }
+
     .friend .name {
         font-size: 1.5rem;
         text-align: center;
     }
 }
 
-@media screen and  (min-width: 40.063rem) {
+@media screen and (min-width: 40.063rem) {
     .friend {
         display: flex;
         justify-content: center;
         column-gap: 2rem;
     }
+
     .friend .name {
         font-size: 1.5rem;
         text-align: left;

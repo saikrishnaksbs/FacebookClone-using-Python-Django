@@ -4,6 +4,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static '/css/allviewfriendslist.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Friends List</title>
   </head>
   <body>
@@ -15,29 +16,13 @@
     {% for friend in Friend_list %}
     <div id="friends-list">
       <div class="friend">
-        <!-- <img src="{{friend.profile.profileimg.url}}" width="50px"/> -->
+        <img src="{{friend.profile.profileimg.url}}" width="40px" height="40px"/>
         <div class="name">{{friend.friends}}</div>
         <div class="friendbuttons{{friend.friends}}">
       </div>
       </div>
     </div>
     {% endfor %}
-<script>
-      $('.friendbutton').click(function() {
-      var friendname= $(this).attr("friendname");
-      var friendid=$(this).attr("friendid")
-      console.log(friendname,friendid)
-      $.ajax({
-        url: '/sendmessage',
-        type: 'POST',
-        data: {'friendname': friendname,'friendid':friendid ,csrfmiddlewaretoken: '{{ csrf_token }}'},
-        dataType: 'json',
-        success: function(response) {
-          console.log(response.message)
-          $('.friendbuttons'+friendname).text(response.message);
-        }
-      });
-    });
-</script>
-</body>
+</body>  
+<script src="{% static 'js/alljscode.js' %}"></script>
 </html>

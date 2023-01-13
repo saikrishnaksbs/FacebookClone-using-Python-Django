@@ -15,6 +15,7 @@ from .models import Profile, Post, Comment, LikePost, Friend_Request, Friends, C
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
@@ -25,7 +26,6 @@ def home(request):
 
 def signup(request):
     '''Directs to signup page'''
-
     if request.method == 'POST':
         First_name = request.POST['first_name']
         Last_name = request.POST['last_name']
@@ -268,6 +268,7 @@ def search(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def like_post(request):
     '''Directs to like page'''
 
@@ -307,6 +308,7 @@ def like_post(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def postComment(request):
     '''Here you can post your comments'''
 
@@ -330,6 +332,7 @@ def postComment(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def addrequest(request):
     '''Here you can send friend request'''
 
@@ -363,6 +366,7 @@ def addrequest(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def friendrequests(request):
     '''Here you can collect friendrequests list'''
 
@@ -374,6 +378,7 @@ def friendrequests(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def acceptrequest(request):
     '''Here you can accept the requests'''
 
@@ -419,6 +424,7 @@ def acceptrequest(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def rejectrequest(request):
     '''Here you can reject friends'''
 
@@ -435,6 +441,7 @@ def rejectrequest(request):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def friendslist(request, id):
     '''Displays friends list'''
 
@@ -446,6 +453,7 @@ def friendslist(request, id):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def allfriendslist(request, id):
     '''Displays all friends of a searched person'''
 
@@ -457,6 +465,7 @@ def allfriendslist(request, id):
 
 @login_required
 @transaction.atomic
+@csrf_exempt
 def removefriend(request):
     '''Here i can remove my friend'''
 
@@ -581,6 +590,7 @@ def postfeed(request):
     return render(request, 'postfeed.html', {'output': alldetails, 'allposts': friendsposts})
 
 
+@csrf_exempt
 def follow(request):
     if request.method == 'POST':
 
@@ -610,6 +620,7 @@ def follow(request):
             return JsonResponse({'followers_count': followers_count, 'msg': 'Unfollow'})
 
 
+@csrf_exempt
 def unfollow(request):
 
     if request.method == 'POST':

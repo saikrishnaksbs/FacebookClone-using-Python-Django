@@ -411,7 +411,7 @@ body {
     color: #333;
     font-weight: 600;
     margin-top: 0.438rem;
-    padding-top:5px;
+    padding-top: 5px;
 
 }
 
@@ -535,7 +535,7 @@ body {
 
     box-sizing: border-box;
     border-radius: 6.25rem;
-    
+
     resize: none;
     margin-top: 1.25rem;
 }
@@ -748,7 +748,7 @@ body {
     .post-name-info h2 {
 
         font-size: 1.25rem;
-        padding-top:5px;
+        padding-top: 5px;
 
     }
 
@@ -927,10 +927,10 @@ body {
 
     .features span {
         font-size: 1.338rem;
-color: #333;
-font-weight: 600;
-margin-top: 0.938rem;
-padding-top: 0.938rem;
+        color: #333;
+        font-weight: 600;
+        margin-top: 0.938rem;
+        padding-top: 0.938rem;
 
     }
 }

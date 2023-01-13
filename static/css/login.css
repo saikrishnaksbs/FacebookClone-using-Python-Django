@@ -194,8 +194,9 @@ a {
       border-radius: 0.938rem 0.938rem 0 0;
       background: #2b519a;
     }
+
     .login_content form {
-  padding: 0.625rem .875rem 1.125rem .875rem;
-  margin-top: auto;
-}
+      padding: 0.625rem .875rem 1.125rem .875rem;
+      margin-top: auto;
+    }
   }
