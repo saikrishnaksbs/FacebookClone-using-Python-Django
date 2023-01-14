@@ -11,7 +11,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('postuploading', views.postuploading, name='postuploading'),
     path('postdeletion/<uuid:id>', views.postdeletion, name='postdeletion'),
-    path('search', views.search, name='search'),
+    path('search/<int:id>', views.search, name='search'),
     path('like-post', views.like_post, name='like-post'),
     path('addrequest', views.addrequest, name='addrequest'),
     path('postComment', views.postComment, name='postComment'),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('follow', views.follow, name='follow'),
     path('unfollow', views.unfollow, name='unfollow'),
     path('coverpic', views.coverpic, name='coverpic'),
+    path('searchforfriend',views.searchforfriend,name='searchforfriend'),
 ]

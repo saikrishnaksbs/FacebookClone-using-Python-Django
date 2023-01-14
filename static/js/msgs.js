@@ -34,12 +34,13 @@ $(document).ready(function () {
         $("#display").empty();
         for (var chat in response.chats) {
           var meessagedetails =
-            "<b>" +
-            response.chats[chat].sendersname +
-            "</b><p>" +
+            "<b>" + `<div class="allmsgs">`+
+            response.chats[chat].sendersname +`
+            </b><p>` +
             response.chats[chat].message +
             "</p>" +
-            "<br><br>";
+            "<br><br>";+
+            `</div>`
           $("#display").append(meessagedetails);
         }
       },

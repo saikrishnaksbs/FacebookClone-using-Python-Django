@@ -13,13 +13,15 @@
         <h1>Facebook</h1>
     </div>
     <center><h3>Your Friends List</h3>  </center>
-    {% for friend in Friend_list %}
+    {% for friend in request.user.profile.friendnames.all %}
     <div id="friends-list">
-      <img src="{{friend.profile.profileimg.url}}" width="40px" height="40px"/>
+      <div>
+        <img src="{{friend.profile.profileimg.url}}" width="40px" height="40px"/>
+      </div>
       <div class="friend"> 
-        <div class="name">{{friend.friends}}</div>
-        <div class="friendbuttons{{friend.friends}}">
-        <button class="friendbutton" friendname="{{friend.friends}}" friendid="{{friend.profile.ids}}">Remove Friend</button>
+        <div class="name">{{friend.username}}</div>
+        <div class="friendbuttons{{friend.username}}">
+        <button class="friendbutton" friendname="{{friend.username}}" friendid="{{friend.id}}">Remove Friend</button>
         </div>
     </div>
     </div>

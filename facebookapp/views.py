@@ -210,14 +210,27 @@ def postdeletion(request, id):
     blogpost.delete()
     return redirect('profile')
 
+def searchforfriend(request):
+    searched_name = request.GET
+    searched_details = searched_name.get("name")
+    
+    all_searched_details=User.objects.filter(username__icontains=searched_details).exclude(username=request.user.username)
+    print(all_searched_details)
+    
+    return render(request, 'search.html', {'searchlist': all_searched_details})
+
 
 @login_required
 @transaction.atomic
-def search(request):
+def search(request,id):
     '''Directs to searched page'''
-
-    searched_name = request.GET
-    searched_details = searched_name.get("name")
+    searched_details = User.objects.get(id=id)
+    searched_name=searched_details.username
+        
+    all_searched_details=User.objects.filter(id=id)
+    print(all_searched_details)
+    
+    print("------------")
     requested_userid = request.user.id
     searched_name = User.objects.filter(username=searched_details)
     Friend_list = list(Friends.objects.filter(

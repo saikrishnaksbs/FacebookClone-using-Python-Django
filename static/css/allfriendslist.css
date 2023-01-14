@@ -4,7 +4,12 @@
     padding: 0.938rem;
     text-align: center;
 }
+#friends-list{
+    display: grid;
+grid-template-columns: 1fr 2fr 1fr;
 
+padding-left: 3rem;
+}
 
 .friend {
     padding: 0.625rem;
@@ -21,16 +26,20 @@
 
 .friend button {
     padding: 0.188rem;
-    margin-left: 0rem;
+    margin-left: 1rem;
     background-color: #3b5998;
     color: aliceblue;
+    align-self: flex-end;
+    
 }
-
+img{
+    float: right;
+}
 .name {
     font-size: 1.25rem;
 }
 
-@media screen and (min-width: 25.063rem) {
+@media screen and (min-width: 500px) {
     .header {
         background-color: #3b5998;
         color: white;
@@ -68,7 +77,7 @@
     }
 }
 
-@media screen and (min-width: 860px) {
+@media screen and (min-width: 1150) {
     .header {
         background-color: #3b5998;
         color: white;
@@ -76,9 +85,11 @@
         text-align: center;
     }
 
-    .friend-list {
-        text-align: left;
-        display: flex;
+    #friend-list {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        
+        padding-left: 3rem;
     }
 
     .friend {

@@ -1038,3 +1038,33 @@ body {
 
 
 }
+@media screen and (min-width:1201px) and (max-width:2000px) {
+    body{
+        width: 1200px;
+        margin: auto;
+    }
+    .profilepic h1 {
+        font-size: 2.188rem;
+        position: relative;
+        top: -19rem;
+        left: 22rem;
+        margin-bottom: auto;
+      }
+      .profilepic h3 {
+        position: relative;
+        top: -17rem;
+        font-size: 1.8rem;
+        left: 22rem;
+        margin-bottom: auto;
+      }
+      .coverpics {
+        width: 30px;
+        height: 30px;
+        padding-left: 5px;
+        background-color: white;
+        padding-bottom: 5px;
+        position: relative;
+        top: -650px;
+        left: 1050px;
+      }
+}

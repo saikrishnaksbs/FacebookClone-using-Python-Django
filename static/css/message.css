@@ -14,27 +14,37 @@ select {
   align-items: center;
   align-content: center;
   border: 0.063rem solid #ccc;
-  border-radius: 0.25rem;
+  border-radius: 5rem;
   box-sizing: border-box;
   flex-wrap: wrap;
+  height: 35px;
 }
-
-input[type=submit] {
+.allmsgs{
+  background-color: #146bdc;
+  border-radius: 10px;
+  margin: 15px;
   width: 50%;
+  height: 55px;
+}
+input[type=submit] {
+  width: 15%;
   margin: auto;
   background-color: #0901ff;
   color: white;
-  display: flex;
-  justify-content: center;
+  /*! display: flex; */
+  /*! justify-content: center; */
   align-items: center;
   align-content: center;
-  padding: 0.875rem 1.25rem;
+  /*! padding: 0.875rem 1.25rem; */
   margin: auto;
-  margin-top: 0.313rem;
-  border: none;
-  border-radius: 0.25rem;
+  /*! margin-top: 0.313rem; */
+  /*! border: none; */
+  border-radius: 2rem;
   cursor: pointer;
   text-align: center;
+  height: 35px;
+  /*! padding-bottom: 30px; */
+  font-size: 18px;
 }
 
 div {
@@ -49,4 +59,7 @@ div {
   border-radius: 0.313rem;
   padding: 0.625rem;
   margin: 0.625rem 0;
+}
+#post-form{
+display: flex;
 }

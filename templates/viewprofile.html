@@ -21,7 +21,7 @@
     <section class="cover_profile_pics">
       <header class="images">
         <section class="coverphoto">
-          <img src="i.jpg" />
+          <img src="{{output.userprofile.coverimg.url}}" />
         </section>
           <div class="profilepic">
            <img src="{{output.userprofile.profileimg.url}}" />
@@ -33,7 +33,8 @@
            
               {% if output.userprofile.verified %}
               <div class="verified"> 
-                <img  src="static/images/fa0f941d7406f2698ca190b3e88e4ae7.png" />
+                
+                <img  src="{% static 'images/verified.png' %}" />
               </div>
               <h4 id="followers">{{output.userprofile.no_of_followers}} Followers</h4>
                 {% if request.user in output.userprofile.followedby.all %}

@@ -13,14 +13,19 @@
         <h1>Facebook</h1>
     </div>
     <center><h3>Your Messages List</h3>  </center>
-    {% for friend in Friend_list %}
-    
+    {% for friend in request.user.profile.friendnames.all %}
+    <div id="friends-list">
+     <div>
+          <img src="{{friend.profile.profileimg.url}}" width="40px" height="40px"/>
+        </div>
       <div class="friend">
-        <div class="name">{{friend.friends}}</div>
-        <div class="friendbuttons{{friend.friends}}">
-      <a href="/sendmessage/{{friend.friends}}"><button >Send message</button></a> 
+       
+        <div class="name">{{friend.username}}</div>
+        <div class="friendbuttons{{friend.username}}">
+      <a href="/sendmessage/{{friend.username}}"><button >Send message</button></a> 
       </div>
       </div>
+    </div>
     {% endfor %}
   </body>
   <script src="{% static 'js/msgs.js' %}"></script>

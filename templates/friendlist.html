@@ -18,15 +18,17 @@
         
         <div id="friends-list">
             <div class="friend">
-              <img src="{{friend.from_user.profile.profileimg.url}}" width="40px" height="40px"/>
+                <div>
+                    <img src="{{friend.from_user.profile.profileimg.url}}" width="40px" height="40px"/>
+                </div>
                 <div class="name">
                     {{friend.from_user.username}}
                 </div>
-                <div class="accept{{friend.from_user.id}}">
-                    <button class="acceptbutton" friendname="{{friend.from_user.username}}" friendid="{{friend.from_user.id}}"> Accept Requeust </button> 
+                <div class="accept{{friend.from_user.id}}" id="accept">
+                    <button class="acceptbutton" friendname="{{friend.from_user.username}}" friendid="{{friend.from_user.id}}"> Accept </button> 
                 </div>
-                <div class="accept{{friend.from_user.id}}">
-                    <button class="rejectbutton" friendname="{{friend.from_user.username}}" friendid="{{friend.from_user.id}}"> Reject Requeust </button>
+                <div class="accept{{friend.from_user.id}}" id ="reject">
+                    <button class="rejectbutton" friendname="{{friend.from_user.username}}" friendid="{{friend.from_user.id}}"> Reject </button>
                 </div>
                 <p id="stmt{{friend.from_user.id}}"></p>
             </div>
