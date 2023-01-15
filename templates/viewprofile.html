@@ -15,9 +15,7 @@
     <div class="header">
       <h1>Facebook</h1>
     </div>
-    
-
-
+  
     <section class="cover_profile_pics">
       <header class="images">
         <section class="coverphoto">
@@ -29,11 +27,8 @@
                 {{output.name}} <span></span>
               </h1>
   
-
-           
               {% if output.userprofile.verified %}
               <div class="verified"> 
-                
                 <img  src="{% static 'images/verified.png' %}" />
               </div>
               <h4 id="followers">{{output.userprofile.no_of_followers}} Followers</h4>
@@ -55,8 +50,7 @@
                  <!-- <button class="sendreq" searchedby-id="{{output.searchedby}}" searchedname="{{output.name}}" searched-id="{{output.userprofile.ids}}" id="text-button">Send request</button> -->
 
                  {% endif %}
-                 {% endif %}
-               
+                 {% endif %}    
 <!-- 
               <a href="/postuploading"><button class="story">Add to story</button></a>
                 <a href="/settings"><button class="edit">Edit Profile</button></a> -->
