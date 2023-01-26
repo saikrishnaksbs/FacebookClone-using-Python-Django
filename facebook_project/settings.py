@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 from pathlib import Path
 import os
+from django.core.wsgi import get_wsgi_application
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -126,7 +127,14 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+application = get_wsgi_application()
+app = application
+
+
