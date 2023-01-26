@@ -1,0 +1,95 @@
+.header {
+    background-color: #3b5998;
+    color: white;
+    padding: 0.938rem;
+    text-align: center;
+}
+img{
+    text-align: right;
+}
+
+.name{
+    /*! width: 100px; */
+}
+#accept{
+    text-align: right;
+}
+#reject{
+    text-align: left;
+}
+.friend {
+    display: grid;
+    justify-content: center;
+    padding: 1rem;
+    padding: 0.625rem;
+    border-bottom: 0.063rem solid #ccc;
+    column-gap: 1.25rem;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+.friend button {
+    padding: 0.313rem;
+    background-color: #3b5998;
+    color: aliceblue;
+    /*! text-align: right; */
+    /*! text-align: right; */
+    width: 60%;
+}
+
+.friend .name {
+    font-size: 1.5rem;
+    
+}
+img{
+    float: right;
+}
+@media screen and (min-width: 500px) {
+    .friend {
+        display: grid;
+        column-gap: .75rem;
+        grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    }
+
+    .friend .name {
+        font-size: 2.rem;
+        text-align: center;
+        font-size: x-large;
+    }
+    #accept{
+        text-align: left;
+        font-size: 1.2rem;
+        width: auto;
+
+    }
+    #reject{
+        text-align: left;
+        font-size: 1.2rem;
+        width: auto;
+
+
+    }
+}
+
+@media screen and (min-width: 1200) {
+    
+    .friend {
+        display: grid;
+        column-gap: .75rem;
+        grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    }
+
+    .friend .name {
+        font-size: 1.5rem;
+        text-align: left;
+    }
+    #accept{
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    #reject{
+        text-align: center;
+        font-size: 1.2rem;
+
+    }
+}
